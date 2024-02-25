@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Manufacturing Process Monitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #total-defect-rate-section {
+            background-color: #555;
+            /* Slightly darker than the header for distinction */
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .total-defect-rate-display {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 auto;
+            padding: 5px;
+            width: calc(100% - 40px);
+            /* Assuming you want some padding on the sides */
+        }
+
+        #monitoring {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .process {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .operations {
+            margin-top: 10px;
+            background-color: #eef;
+            padding: 5px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .process h2 {
+            margin-top: 0;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status::before {
+            content: '🔴';
+            margin-right: 5px;
+        }
+
+        #cpu-status::before,
+        #gpu-status::before,
+        #case-status::before {
+            content: '🟢';
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>모니터링 인터페이스</h1>
+    </header>
+    <section id="total-defect-rate-section">
+        <div id="total-defect-rate" class="total-defect-rate-display">Total Defect Rate: 0%</div>
+    </section>
+    <section id="monitoring">
+        <div class="process">
+            <h2>CPU 장착</h2>
+            <div id="cpu-status" class="status">Status: Pending</div>
+            <div id="cpu-operations" class="operations">Operations: 0</div>
+            <div id="cpu-defect-rate" class="operations">Defect Rate: 0%</div>
+            <div id="cpu-defect-count" class="operations">Defects: 0</div>
+            <div id="cpu-good-count" class="operations">Good Count: 0</div>
+        </div>
+        <div class="process">
+            <h2>GPU 장착</h2>
+            <div id="gpu-status" class="status">Status: Pending</div>
+            <div id="gpu-operations" class="operations">Operations: 0</div>
+            <div id="gpu-defect-rate" class="operations">Defect Rate: 0%</div>
+            <div id="gpu-defect-count" class="operations">Defects: 0</div>
+            <div id="gpu-good-count" class="operations">Good Count: 0</div>
+        </div>
+        <div class="process">
+            <h2>메인보드 케이스 장착</h2>
+            <div id="case-status" class="status">Status: Pending</div>
+            <div id="case-operations" class="operations">Operations: 0</div>
+            <div id="case-defect-rate" class="operations">Defect Rate: 0%</div>
+            <div id="case-defect-count" class="operations">Defects: 0</div>
+            <div id="case-good-count" class="operations">Good Count: 0</div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cpuStatus = document.getElementById('cpu-status');
+            const cpuOperations = document.getElementById('cpu-operations');
+            const gpuStatus = document.getElementById('gpu-status');
+            const gpuOperations = document.getElementById('gpu-operations');
+            const caseStatus = document.getElementById('case-status');
+            const caseOperations = document.getElementById('case-operations');
+            const cpuDefectRateElement = document.getElementById('cpu-defect-rate');
+            const gpuDefectRateElement = document.getElementById('gpu-defect-rate');
+            const caseDefectRateElement = document.getElementById('case-defect-rate');
+            const cpuDefectCountElement = document.getElementById('cpu-defect-count');
+            const gpuDefectCountElement = document.getElementById('gpu-defect-count');
+            const caseDefectCountElement = document.getElementById('case-defect-count');
+            const cpuGoodCountElement = document.getElementById('cpu-good-count');
+            const gpuGoodCountElement = document.getElementById('gpu-good-count');
+            const caseGoodCountElement = document.getElementById('case-good-count');
+            const totalDefectRateElement = document.getElementById('total-defect-rate');
+
+            // Initialize counts
+            let cpuOperationsCount = 0;
+            let gpuOperationsCount = 0;
+            let caseOperationsCount = 0;
+            let cpuDefectCount = 0;
+            let gpuDefectCount = 0;
+            let caseDefectCount = 0;
+            let iteration = 0;
+            const maxIterations = 30;
+
+            // Modified simulateDefects function to accept defectRate
+            function simulateDefects(defectRate) {
+                return Math.random() < defectRate ? 1 : 0;
+            }
+
+            function calculateDefectRate(operationsCount, defectCount) {
+                if (operationsCount === 0) return "0.00";
+                const rate = (defectCount / operationsCount) * 100;
+                return rate.toFixed(2);
+            }
+
+            function calculateTotalDefectRate() {
+                const totalOperations = cpuOperationsCount + gpuOperationsCount + caseOperationsCount;
+                const totalDefects = cpuDefectCount + gpuDefectCount + caseDefectCount;
+                if (totalOperations === 0) return "0.00";
+                const rate = (totalDefects / totalOperations) * 100;
+                return rate.toFixed(2);
+            }
+
+            function updateCountsAndRates() {
+                // CPU
+                cpuOperations.textContent = `Operations: ${cpuOperationsCount}`;
+                cpuDefectCountElement.textContent = `Defects: ${cpuDefectCount}`;
+                cpuGoodCountElement.textContent = `Good Count: ${Math.max(0, cpuOperationsCount - cpuDefectCount)}`;
+                cpuDefectRateElement.textContent = `Defect Rate: ${calculateDefectRate(cpuOperationsCount, cpuDefectCount)}%`;
+
+                // GPU
+                gpuOperations.textContent = `Operations: ${gpuOperationsCount}`;
+                gpuDefectCountElement.textContent = `Defects: ${gpuDefectCount}`;
+                gpuGoodCountElement.textContent = `Good Count: ${Math.max(0, gpuOperationsCount - gpuDefectCount)}`;
+                gpuDefectRateElement.textContent = `Defect Rate: ${calculateDefectRate(gpuOperationsCount, gpuDefectCount)}%`;
+
+                // Case
+                caseOperations.textContent = `Operations: ${caseOperationsCount}`;
+                caseDefectCountElement.textContent = `Defects: ${caseDefectCount}`;
+                caseGoodCountElement.textContent = `Good Count: ${Math.max(0, caseOperationsCount - caseDefectCount)}`;
+                caseDefectRateElement.textContent = `Defect Rate: ${calculateDefectRate(caseOperationsCount, caseDefectCount)}%`;
+
+                // total
+                totalDefectRateElement.textContent = `Total Defect Rate: ${calculateTotalDefectRate()}%`;
+            }
+
+            function runProcess() {
+                if (iteration < maxIterations) {
+                    // Run CPU process
+                    cpuStatus.textContent = 'Status: Running';
+                    cpuStatus.style.color = 'red';
+                    setTimeout(() => {
+                        cpuStatus.textContent = 'Status: Completed';
+                        cpuStatus.style.color = 'green';
+                        cpuOperationsCount++;
+                        cpuDefectCount += simulateDefects(0.01);  // cpu 불량률 1%
+
+                        // Run GPU process
+                        gpuStatus.textContent = 'Status: Running';
+                        gpuStatus.style.color = 'red';
+                        setTimeout(() => {
+                            gpuStatus.textContent = 'Status: Completed';
+                            gpuStatus.style.color = 'green';
+                            gpuOperationsCount++;
+                            gpuDefectCount += simulateDefects(0.03);  // gpu 불량률 3%
+
+                            // Run Case process
+                            caseStatus.textContent = 'Status: Running';
+                            caseStatus.style.color = 'red';
+                            setTimeout(() => {
+                                caseStatus.textContent = 'Status: Completed';
+                                caseStatus.style.color = 'green';
+                                caseOperationsCount++;
+                                caseDefectCount += simulateDefects(0.5);  // 케이스 불량률 5%
+
+                                updateCountsAndRates();
+
+                                iteration++;
+                                runProcess();
+
+                            }, 3000);
+                        }, 3000);
+                    }, 3000);
+                }
+            }
+
+            runProcess();
+        });
+    </script>
+</body>
+
+</html>
