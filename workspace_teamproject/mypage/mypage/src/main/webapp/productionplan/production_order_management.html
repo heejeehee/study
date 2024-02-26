@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생산지시관리</title>
+</head>
+
+<style>
+    /* 전체 마진, 폰트 */
+    body {
+        margin: 0px;
+        font-size: 1em;
+    }
+
+    /* 생산지시관리 헤더 */
+    #headerj {
+        border-top: 2px solid #888888;
+        border-bottom: 2px solid #888888;
+
+        margin-top: 10px;
+        padding: 5px;
+
+        font-weight: bold;
+    }
+
+    /* 윗칸 div */
+    .updiv {
+        border: 1px dotted black;
+        width: 97%;
+        height: 200px;
+        margin-left: 1%;
+        margin-right: 1%;
+        margin-top: 15px;
+        font-size: 0.8em;
+    }
+    /* order_menu wrap */
+    #order_menu {
+        border: 1px solid black;
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    /* order_menu 하위 버튼 */
+    #order_menu div {
+        border: 1px solid black; 
+        width: 150px; 
+        height: 150px; 
+        display:flex; 
+        justify-content: center; 
+        align-items: center; 
+        font-size: 1.5em; 
+        border-radius: 10%;
+
+        cursor: pointer;
+    }
+
+    #order_menu div:active {
+
+    }
+
+
+
+    /* 아랫칸 div */
+    .downdiv {
+        border: 1px dotted black;
+        width: 97%;
+        height: 450px;
+        margin-left: 1%;
+        margin-right: 1%;
+        margin-top: 15px;
+        font-size: 0.8em;
+    }
+</style>
+
+<body>
+    <!-- content -->
+    <div id="content">
+
+        <!-- div id="headerj" 시작 -->
+        <div id="headerj">
+            생산지시관리
+        </div>
+        <!-- div id="headerj" 끝 -->
+
+        <!-- updiv -->
+        <div class="updiv">
+            <!-- order_menu -->
+            <div id="order_menu">
+                
+            </div>
+            <!-- order_menu 끝 -->
+
+        </div>
+        <!-- updiv 끝 -->
+
+        <!-- downdiv -->
+        <div class="downdiv">
+
+        </div>
+        <!-- downdiv 끝 -->
+
+    </div>
+    <!-- content 끝 -->
+
+    <script>
+        // 실행문
+        makeMenu("자재준비상황 <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp체크","item_check");
+        makeMenu("장비상황 체크","machine_check");
+        makeMenu("사원현황 체크","employee_check");
+        makeMenu("일단위 작업지시 <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp생성","create_order");
+        makeMenu("계획수정","modify_plan");
+
+        // 메뉴 만들기
+        function makeMenu(menuName, menuId){
+            let orderMenu = document.querySelector("#order_menu");
+
+            let div = document.createElement("div");
+            div.setAttribute("id",menuId);
+
+            orderMenu.appendChild(div).innerHTML = menuName;
+        }
+
+    </script>
+
+
+</body>
+
+</html>
