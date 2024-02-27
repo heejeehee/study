@@ -121,3 +121,95 @@
     #plan_table_tbody tr {
         height: 30px;
     }
+
+
+
+
+    /**************************************************/
+
+
+
+
+    #alarm_wrap {
+        z-index: 10;
+
+        display: none;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        border: 1px solid #bebebe;
+        width: 500px;
+        height: 250px;
+
+        background-color: #ededed;
+        border-radius: 10px;
+        ;
+    }
+
+    #message_div {
+        width: 100% -1px;
+        height: 70%;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        font-size: 18px;
+    }
+
+    #alarm_btn_wrap {
+        width: 100% -1px;
+        height: 29%;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #btn_cancel,
+    #btn_ok {
+        width: 200px;
+        height: 50px;
+        border: 0px;
+        border-radius: 5px;
+
+        cursor: pointer;
+    }
+
+    #btn_ok {
+        background-color: #3498db;
+        color: white;
+    }
+
+    #btn_ok:active {
+        background-color: #346edb;
+    }
+
+    #btn_cancel {
+        background-color: #fa5959;
+        color: white;
+    }
+
+    #btn_cancel:active {
+        background-color: #d80001;
+    }
+
+
+    #overlay {
+        position: fixed;
+        display: none;
+
+        top: 0;
+        left: 0;
+
+        height: 100%;
+        width: 100%;
+
+        background-color: black;
+        opacity: 0.5;
+
+        z-index: 5;
+    }

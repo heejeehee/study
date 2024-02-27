@@ -96,3 +96,85 @@ function checkEvent(tableNum) {
     });
 
 }
+
+// 알람기능
+function showAlarm(message){
+    let alarm = document.querySelector("#alarm_wrap");
+    let overlay = document.querySelector("#overlay");
+    let txt = document.querySelector("#message")
+
+    txt.innerHTML = "<span id='message'>"+ message +"</span>"
+
+    alarm.style.cssText = "display: block;"
+    overlay.style.cssText = "display: block;"
+}
+function hideAlarm(){
+    let alarm = document.querySelector("#alarm_wrap");
+    let overlay = document.querySelector("#overlay");
+    
+    alarm.style.cssText = "display: none;"
+    overlay.style.cssText = "display: none;"
+}
+function cancelFalse(){
+    let cancel = document.querySelector("#btn_cancel");
+    cancel.addEventListener("click",function(){
+        hideAlarm();
+        return false;
+    })
+}
+function okTrue(){
+    let cancel = document.querySelector("#btn_ok");
+    cancel.addEventListener("click",function(){
+        hideAlarm();
+        return true;
+    })
+}
+
+// 버튼클릭기능
+window.addEventListener("load", function(){
+    document.querySelector("#btn_auto").addEventListener("click", function(){
+        showAlarm("계획을 자동으로 생성하시겠습니까?");
+        cancelFalse(); // 닫기버튼
+        okTrue(); // 확인버튼
+    })
+
+    document.querySelector("#btn_plancode").addEventListener("click", function(){
+        showAlarm("계획코드를 부여합니다.");
+        cancelFalse(); // 닫기버튼
+        okTrue(); // 확인버튼
+    })
+
+    document.querySelector("#btn_add").addEventListener("click", function(){
+        showAlarm("계획을 추가합니다.");
+        cancelFalse(); // 닫기버튼
+        okTrue(); // 확인버튼
+    })
+
+    document.querySelector("#btn_modify").addEventListener("click", function(){
+        showAlarm("선택한 계획을 수정합니다.");
+        cancelFalse(); // 닫기버튼
+        okTrue(); // 확인버튼
+    })
+    
+    document.querySelector("#btn_modify").addEventListener("click", function(){
+        showAlarm("선택한 계획을 수정합니다.");
+        cancelFalse(); // 닫기버튼
+        okTrue(); // 확인버튼
+    })
+
+    document.querySelector("#btn_delete").addEventListener("click", function(){
+        showAlarm("선택한 계획을 삭제합니다.");
+        cancelFalse(); // 닫기버튼
+        okTrue(); // 확인버튼
+    })
+
+    document.querySelector("#btn_save").addEventListener("click", function(){
+        showAlarm("계획을 저장합니다.");
+        cancelFalse(); // 닫기버튼
+        okTrue(); // 확인버튼
+    })
+    
+})
+
+
+

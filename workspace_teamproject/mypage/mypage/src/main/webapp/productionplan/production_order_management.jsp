@@ -63,10 +63,6 @@
             </div>
             <!-- content 끝 -->
 
-            <script>
-
-
-            </script>
 
 
     </body>

@@ -54,6 +54,27 @@
 
             </div>
             <!-- content 끝 -->
+
+
+
+
+
+
+
+
+
+            <div id="alarm_wrap">
+                <div id="message_div">
+                    <span id="message">메세지입니다.</span>
+                </div>
+                <div id="alarm_btn_wrap">
+                    <button type="button" id="btn_cancel">닫기</button>
+                    <button type="button" id="btn_ok">확인</button>
+                </div>
+            </div>
+            
+            <div id="overlay"></div>
+
     </body>
 
     <link rel="stylesheet" href="../css/production_plan_management.css">
