@@ -51,9 +51,9 @@
 						<%
 						for (int i = 0; i < list.size(); i++) {
 							ProductPlanManagementDTO item = (ProductPlanManagementDTO) list.get(i);
-							%>
+						%>
 						<tr>
-							<td><input type="checkbox"></td>
+							<td><input type="checkbox" class="table1_chkChild"></td>
 							<td></td>
 							<td><%=item.getItemCode()%></td>
 							<td><%=item.getItemName()%></td>
