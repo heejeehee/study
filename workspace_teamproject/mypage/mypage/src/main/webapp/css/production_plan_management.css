@@ -57,7 +57,8 @@
     #btn_modify,
     #btn_delete,
     #btn_save,
-    #btn_plancode {
+    #btn_plancode,
+    #btn_modify_end {
         background-color: #3498db;
         border: 0px;
         border-radius: 5px;
@@ -75,8 +76,19 @@
     #btn_modify:active,
     #btn_delete:active,
     #btn_save:active,
-    #btn_plancode:active {
+    #btn_plancode:active,
+    #btn_modify_end:active {
         background-color: #346edb;
+    }
+
+    /* btn_modify */
+    #btn_modify {
+        display: inline-block;
+    }
+
+    /* btn_modify_end */
+    #btn_modify_end {
+        display: none;
     }
 
     /* plan_table_div */

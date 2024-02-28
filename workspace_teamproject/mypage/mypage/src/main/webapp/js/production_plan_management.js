@@ -98,15 +98,27 @@ function checkEvent(tableNum) {
 }
 
 // 알람기능
-function showAlarm(message){
+function showAlarm(message, callback){
     let alarm = document.querySelector("#alarm_wrap");
     let overlay = document.querySelector("#overlay");
-    let txt = document.querySelector("#message")
+    let txt = document.querySelector("#message");
+    let btnOk = document.querySelector("#btn_ok");
+    let btnCancel = document.querySelector("#btn_cancel");
 
     txt.innerHTML = "<span id='message'>"+ message +"</span>"
 
     alarm.style.cssText = "display: block;"
     overlay.style.cssText = "display: block;"
+
+    btnOk.addEventListener("click", function() {
+        hideAlarm();
+        callback(true);
+    });
+
+    btnCancel.addEventListener("click", function() {
+        hideAlarm();
+        callback(false);
+    });
 }
 function hideAlarm(){
     let alarm = document.querySelector("#alarm_wrap");
@@ -115,63 +127,79 @@ function hideAlarm(){
     alarm.style.cssText = "display: none;"
     overlay.style.cssText = "display: none;"
 }
-function cancelFalse(){
-    let cancel = document.querySelector("#btn_cancel");
-    cancel.addEventListener("click",function(){
-        hideAlarm();
-        return false;
-    })
-}
-function okTrue(){
-    let cancel = document.querySelector("#btn_ok");
-    cancel.addEventListener("click",function(){
-        hideAlarm();
-        return true;
-    })
-}
 
 // 버튼클릭기능
 window.addEventListener("load", function(){
     document.querySelector("#btn_auto").addEventListener("click", function(){
-        showAlarm("계획을 자동으로 생성하시겠습니까?");
-        cancelFalse(); // 닫기버튼
-        okTrue(); // 확인버튼
+        showAlarm("계획을 자동으로 생성하시겠습니까?",function(result){
+            if(result){
+                console.log("클릭")
+            } else {
+                hideAlarm();
+            }
+        });
     })
 
     document.querySelector("#btn_plancode").addEventListener("click", function(){
-        showAlarm("계획코드를 부여합니다.");
-        cancelFalse(); // 닫기버튼
-        okTrue(); // 확인버튼
+        showAlarm("계획코드를 부여합니다.", function(){
+            if(result){
+                console.log("클릭")
+            } else {
+                hideAlarm();
+            }
+        });
     })
 
     document.querySelector("#btn_add").addEventListener("click", function(){
-        showAlarm("계획을 추가합니다.");
-        cancelFalse(); // 닫기버튼
-        okTrue(); // 확인버튼
+        showAlarm("계획을 추가합니다.", function(result){
+            if(result){
+                console.log("클릭")
+            } else {
+                hideAlarm();
+            }
+        });
     })
 
     document.querySelector("#btn_modify").addEventListener("click", function(){
-        showAlarm("선택한 계획을 수정합니다.");
-        cancelFalse(); // 닫기버튼
-        okTrue(); // 확인버튼
+        showAlarm("선택한 계획을 수정합니다.", function(result){
+            if(result){
+                document.querySelector("#btn_modify").style.cssText = "display: none;"
+                document.querySelector("#btn_modify_end").style.cssText = "display: inline-block;"
+            } else {
+                hideAlarm();
+            }
+        }); 
     })
     
-    document.querySelector("#btn_modify").addEventListener("click", function(){
-        showAlarm("선택한 계획을 수정합니다.");
-        cancelFalse(); // 닫기버튼
-        okTrue(); // 확인버튼
+    document.querySelector("#btn_modify_end").addEventListener("click", function(){
+        showAlarm("수정을 완료합니다.", function(result){
+            if(result){
+                document.querySelector("#btn_modify").style.cssText = "display: inline-block;"
+                document.querySelector("#btn_modify_end").style.cssText = "display: none;"
+            } else {
+                hideAlarm();
+            }
+        });
     })
 
     document.querySelector("#btn_delete").addEventListener("click", function(){
-        showAlarm("선택한 계획을 삭제합니다.");
-        cancelFalse(); // 닫기버튼
-        okTrue(); // 확인버튼
+        showAlarm("선택한 계획을 삭제합니다.", function(result){
+            if(result){
+                console.log("클릭")
+            } else {
+                hideAlarm();
+            }
+        });
     })
 
     document.querySelector("#btn_save").addEventListener("click", function(){
-        showAlarm("계획을 저장합니다.");
-        cancelFalse(); // 닫기버튼
-        okTrue(); // 확인버튼
+        showAlarm("계획을 저장합니다.", function(result){
+            if(result){
+                console.log("클릭")
+            } else {
+                hideAlarm();
+            }
+        });
     })
     
 })

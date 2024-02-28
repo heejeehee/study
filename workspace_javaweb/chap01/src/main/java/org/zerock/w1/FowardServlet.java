@@ -16,7 +16,7 @@ public class FowardServlet extends HttpServlet {
 		// Forward 방식
 		System.out.println("ForwardServlet doGet() 실행");
 		
-		String url = "second";
+		String url = "/second";
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher(url);
 		dispatch.forward(request, response);
