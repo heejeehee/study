@@ -1,13 +1,13 @@
 // 실행문
-makeTable(1, "#plan_table_thead", 1, 10, "#plan_table_tbody", 20);
+makeTable(1, "#plan_table_thead", 1, 10);
 makeColName(1);
 checkEvent(1);
 
 // 테이블 생성
-function makeTable(tableNum, theadId, x1, y, tbodyId, x2) {
+function makeTable(tableNum, theadId, x, y) {
     let thead = document.querySelector(theadId);
 
-    for (let i = 1; i <= x1; i++) {
+    for (let i = 1; i <= x; i++) {
         let tr = document.createElement('tr');
         thead.appendChild(tr);
         for (let j = 1; j <= y; j++) {
@@ -16,31 +16,29 @@ function makeTable(tableNum, theadId, x1, y, tbodyId, x2) {
             th.setAttribute("id", `thead${tableNum}_${i}_${j}`);
         }
     }
-
-    let tbody = document.querySelector(tbodyId)
-
-    for (let i = 1; i <= x2; i++) {
-        let tr = document.createElement('tr');
-        tbody.appendChild(tr);
-        for (let j = 1; j <= y; j++) {
-            let td = document.createElement('td');
-            tr.appendChild(td);
-            td.setAttribute("id", `tbody${tableNum}_${i}_${j}`);
-        }
-    }
-
-    // 체크박스 생성
-    for (let i = 1; i <= x2; i++) {
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.classList.add("table1_chkChild");
-
-        document.querySelector("#tbody1_" + i + "_1").appendChild(checkbox);
-        // 체크박스 중앙정렬
-        document.querySelector("#tbody1_" + i + "_1").style.cssText = "text-align: center";
-    }
-
 }
+
+// 1줄 추가
+function addRow() {
+	console.log()
+    let tbody = document.getElementById("plan_table_tbody"); // 테이블 ID를 적절히 변경해주세요
+    let newRow = tbody.insertRow(tbody.rows.length);
+    
+    let cell1 = newRow.insertCell(0);
+    cell1.className = "checkboxcell";
+    cell1.style.textAlign = "center";
+    cell1.innerHTML = '<input type="checkbox" class="table1_chkChild">';
+    
+    let cell2 = newRow.insertCell(1);
+    cell2.className = "table1_plancode";
+    cell2.innerHTML = '';
+    
+    for (let i = 2; i <= 9; i++) {
+        let cell = newRow.insertCell(i);
+        cell.innerHTML = "";
+    }
+}
+
 
 // 컬럼명 생성
 function makeColName(tableNum) {
@@ -98,28 +96,37 @@ function checkEvent(tableNum) {
 }
 
 // 알람기능
-function showAlarm(message, callback){
+function showAlarm(message, callback) {
     let alarm = document.querySelector("#alarm_wrap");
     let overlay = document.querySelector("#overlay");
     let txt = document.querySelector("#message");
     let btnOk = document.querySelector("#btn_ok");
     let btnCancel = document.querySelector("#btn_cancel");
 
-    txt.innerHTML = "<span id='message'>"+ message +"</span>"
+    txt.innerHTML = "<span id='message'>" + message + "</span>"
 
     alarm.style.cssText = "display: block;"
     overlay.style.cssText = "display: block;"
+    
+    // 이전에 할당된 이벤트 리스너 제거
+    btnOk.removeEventListener("click", btnOkClickHandler);
+    btnCancel.removeEventListener("click", btnCancelClickHandler);
 
-    btnOk.addEventListener("click", function() {
+    // 새로운 이벤트 리스너 추가
+    btnOk.addEventListener("click", btnOkClickHandler);
+    btnCancel.addEventListener("click", btnCancelClickHandler);
+
+    function btnOkClickHandler() {
         hideAlarm();
         callback(true);
-    });
+    }
 
-    btnCancel.addEventListener("click", function() {
+    function btnCancelClickHandler() {
         hideAlarm();
         callback(false);
-    });
+    }
 }
+
 function hideAlarm(){
     let alarm = document.querySelector("#alarm_wrap");
     let overlay = document.querySelector("#overlay");
@@ -128,22 +135,40 @@ function hideAlarm(){
     overlay.style.cssText = "display: none;"
 }
 
+
+// 랜덤코드생성
+function randomNumber() {
+   	let randomNumber = Math.floor(Math.random() * 100000000);
+    return randomNumber.toString().padStart(8, '0');
+}
+
 // 버튼클릭기능
 window.addEventListener("load", function(){
-    document.querySelector("#btn_auto").addEventListener("click", function(){
-        showAlarm("계획을 자동으로 생성하시겠습니까?",function(result){
-            if(result){
-                console.log("클릭")
-            } else {
-                hideAlarm();
-            }
-        });
-    })
+	
+	console.log("123")
+    document.querySelector("#btn_auto").addEventListener("click", function () {
+	    showAlarm("계획을 자동으로 생성하시겠습니까?", function (result) {
+	        if (result) {
+	            console.log("클릭");
+	            window.location.href = "http://127.0.0.1:8080/mypage/ppms";
+	        } else {
+	            hideAlarm();
+	        }
+	    });
+	});
 
     document.querySelector("#btn_plancode").addEventListener("click", function(){
-        showAlarm("계획코드를 부여합니다.", function(){
+        showAlarm("계획코드를 부여합니다.", function(result){
             if(result){
-                console.log("클릭")
+                console.log("클릭");
+                if(document.getElementById("plan_table").getElementsByTagName("tr").length > 1){
+					let planCodeTable = document.getElementById("plan_table").getElementsByClassName("table1_plancode");
+					for(i=0; i<planCodeTable.length; i++){
+						planCodeTable[i].innerHTML = randomNumber();
+					}
+				} else {
+					showAlarm("코드를 부여할 계획이 없습니다! <br>계획을 생성한 뒤 시도하세요.",function(){})
+				}
             } else {
                 hideAlarm();
             }
@@ -154,10 +179,11 @@ window.addEventListener("load", function(){
         showAlarm("계획을 추가합니다.", function(result){
             if(result){
                 console.log("클릭")
+                addRow();
             } else {
                 hideAlarm();
             }
-        });
+        });        
     })
 
     document.querySelector("#btn_modify").addEventListener("click", function(){

@@ -96,7 +96,7 @@
         border-top: 1px solid #cccccc;
         border-bottom: 1px solid #cccccc;
         width: 100%;
-        height: 91%;
+        height: 600px;
 
         overflow-y: scroll;
     }
@@ -121,7 +121,6 @@
     /* plan_table 자체넓이 */
     #plan_table {
         width: 100%;
-        height: 700px;
     }
 
     /* plan_table 컬럼 */
@@ -130,7 +129,7 @@
     }
 
     /* plan_table 내용 */
-    #plan_table_tbody tr {
+    #plan_table_tbody td {
         height: 30px;
     }
 

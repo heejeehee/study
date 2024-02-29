@@ -7,8 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MainPage</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="http://127.0.0.1:8080/mypage/css/styles.css">
+    <script src="http://127.0.0.1:8080/mypage/js/script.js"></script>
 </head>
 <style>
 
@@ -74,10 +74,10 @@
             <div id="standard4"><a href="../process/process_part.jsp">부품정보관리</a></div>
         </div>
         <div id="planning">
-            <div id="planning1"><a href="../productionplan/production_plan_management.jsp">생산계획관리</a></div>
-            <div id="planning3"><a href="../productionplan/production_order_management.jsp">생산지시관리</a></div>
-            <div id="planning2"><a href="../productionplan/process_order_plan.jsp">공정지시계획</a></div>
-            <div id="planning4"><a href="../productionplan/process_order.jsp">공정지시관리</a></div>
+            <div id="planning1"><a href="/mypage/productionplan/production_plan_management.jsp">생산계획관리</a></div>
+            <div id="planning3"><a href="/mypage/productionplan/production_order_management.jsp">생산지시관리</a></div>
+            <div id="planning2"><a href="/mypage/productionplan/process_order_plan.jsp">공정지시계획</a></div>
+            <div id="planning4"><a href="/mypage/productionplan/process_order.jsp">공정지시관리</a></div>
         </div>
         <div id="performing">
             <div id="perform1"><a href="../productionperf/production_performance_chart.jsp">생산계획대비 실적현황</a></div>

@@ -49,12 +49,13 @@
 
 					<tbody id="plan_table_tbody">
 						<%
+						try{
 						for (int i = 0; i < list.size(); i++) {
 							ProductPlanManagementDTO item = (ProductPlanManagementDTO) list.get(i);
 						%>
 						<tr>
-							<td><input type="checkbox" class="table1_chkChild"></td>
-							<td></td>
+							<td class="checkboxcell" style="text-align: center;"><input type="checkbox" class="table1_chkChild"></td>
+							<td class="table1_plancode"></td>
 							<td><%=item.getItemCode()%></td>
 							<td><%=item.getItemName()%></td>
 							<td><%=item.getOutgoing()%></td>
@@ -65,6 +66,8 @@
 							<td><%=item.getEnddate()%></td>
 						</tr>
 						<%
+						}}catch(Exception e){
+							e.printStackTrace();
 						}
 						%>
 					</tbody>
@@ -100,7 +103,7 @@
 
 </body>
 
-<link rel="stylesheet" href="css/production_plan_management.css">
-<script src="js/production_plan_management.js"></script>
+<link rel="stylesheet" href="http://127.0.0.1:8080/mypage/css/production_plan_management.css">
+<script src="http://127.0.0.1:8080/mypage/js/production_plan_management.js"></script>
 
 </html>
