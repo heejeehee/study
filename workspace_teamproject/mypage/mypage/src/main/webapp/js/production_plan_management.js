@@ -96,37 +96,16 @@ function checkEvent(tableNum) {
 }
 
 // 알람기능
-function showAlarm(message, callback) {
-    let alarm = document.querySelector("#alarm_wrap");
-    let overlay = document.querySelector("#overlay");
-    let txt = document.querySelector("#message");
-    let btnOk = document.querySelector("#btn_ok");
-    let btnCancel = document.querySelector("#btn_cancel");
-
-    txt.innerHTML = "<span id='message'>" + message + "</span>"
-
-    alarm.style.cssText = "display: block;"
-    overlay.style.cssText = "display: block;"
-    
-    // 이전에 할당된 이벤트 리스너 제거
-    btnOk.removeEventListener("click", btnOkClickHandler);
-    btnCancel.removeEventListener("click", btnCancelClickHandler);
-
-    // 새로운 이벤트 리스너 추가
-    btnOk.addEventListener("click", btnOkClickHandler);
-    btnCancel.addEventListener("click", btnCancelClickHandler);
-
-    function btnOkClickHandler() {
-        hideAlarm();
-        callback(true);
-    }
-
-    function btnCancelClickHandler() {
-        hideAlarm();
-        callback(false);
-    }
+function showAlarm(message) {
+	let alarm = document.querySelector("#alarm_wrap");
+	let overlay = document.querySelector("#overlay");
+	let txt = document.querySelector("#message");
+	
+	txt.innerHTML = "<span id='message'>" + message + "</span>"
+	
+	alarm.style.cssText = "display: block;"
+	overlay.style.cssText = "display: block;"
 }
-
 function hideAlarm(){
     let alarm = document.querySelector("#alarm_wrap");
     let overlay = document.querySelector("#overlay");
@@ -134,7 +113,6 @@ function hideAlarm(){
     alarm.style.cssText = "display: none;"
     overlay.style.cssText = "display: none;"
 }
-
 
 // 랜덤코드생성
 function randomNumber() {
@@ -144,91 +122,85 @@ function randomNumber() {
 
 // 버튼클릭기능
 window.addEventListener("load", function(){
+	let btnOk = document.querySelector("#btn_ok")
+	let btnCancel = document.querySelector("#btn_cancel")
+	// 취소버튼 기능 미리넣기
+	btnCancel.addEventListener("click", function(){
+		hideAlarm();
+	})
 	
-	console.log("123")
     document.querySelector("#btn_auto").addEventListener("click", function () {
-	    showAlarm("계획을 자동으로 생성하시겠습니까?", function (result) {
-	        if (result) {
-	            console.log("클릭");
-	            window.location.href = "http://127.0.0.1:8080/mypage/ppms";
-	        } else {
-	            hideAlarm();
-	        }
-	    });
+	   	function moveLocation(){
+			hideAlarm();
+			window.location.href = "http://127.0.0.1:8080/mypage/ppms"
+		   	btnOk.removeEventListener("click", moveLocation)
+		}
+	    showAlarm("계획을 자동으로 생성하시겠습니까?");
+	    btnOk.addEventListener("click", moveLocation);
 	});
 
     document.querySelector("#btn_plancode").addEventListener("click", function(){
-        showAlarm("계획코드를 부여합니다.", function(result){
-            if(result){
-                console.log("클릭");
-                if(document.getElementById("plan_table").getElementsByTagName("tr").length > 1){
-					let planCodeTable = document.getElementById("plan_table").getElementsByClassName("table1_plancode");
+        function giveCode(){
+			hideAlarm();
+	        if(document.getElementById("plan_table").getElementsByTagName("tr").length > 1){
+				let planCodeTable = document.getElementById("plan_table").getElementsByClassName("table1_plancode");
 					for(i=0; i<planCodeTable.length; i++){
 						planCodeTable[i].innerHTML = randomNumber();
 					}
-				} else {
-					showAlarm("코드를 부여할 계획이 없습니다! <br>계획을 생성한 뒤 시도하세요.",function(){})
-				}
-            } else {
-                hideAlarm();
-            }
-        });
-    })
+			btnOk.removeEventListener("click", giveCode);
+			} else {
+				function okIsOut() {
+                	hideAlarm();
+                	btnOk.removeEventListener("click", okIsOut);
+            	}
+            	showAlarm("코드를 부여할 계획이 없습니다! <br>계획을 생성한 뒤 시도하세요.");
+            	btnOk.addEventListener("click", okIsOut);
+			}			
+			btnOk.removeEventListener("click", giveCode);
+		}
+		
+        showAlarm("계획코드를 부여합니다.");
+        btnOk.addEventListener("click", giveCode);
+    });
 
-    document.querySelector("#btn_add").addEventListener("click", function(){
-        showAlarm("계획을 추가합니다.", function(result){
-            if(result){
-                console.log("클릭")
-                addRow();
-            } else {
-                hideAlarm();
-            }
-        });        
-    })
+    document.querySelector("#btn_add").addEventListener("click", function(){        
+        function doAddRow(){
+			hideAlarm();
+			addRow();
+			btnOk.removeEventListener("click", doAddRow)
+		}
+        showAlarm("계획을 추가합니다.");
+		btnOk.addEventListener("click", doAddRow);
+    });
 
     document.querySelector("#btn_modify").addEventListener("click", function(){
-        showAlarm("선택한 계획을 수정합니다.", function(result){
-            if(result){
-                document.querySelector("#btn_modify").style.cssText = "display: none;"
-                document.querySelector("#btn_modify_end").style.cssText = "display: inline-block;"
-            } else {
-                hideAlarm();
-            }
-        }); 
-    })
+        function doModify(){
+			hideAlarm();
+            document.querySelector("#btn_modify").style.cssText = "display: none;"
+            document.querySelector("#btn_modify_end").style.cssText = "display: inline-block;"
+            btnOk.removeEventListener("click", doModify);
+		}
+        showAlarm("선택한 계획을 수정합니다.");
+        btnOk.addEventListener("click", doModify);
+    }); 
+    
     
     document.querySelector("#btn_modify_end").addEventListener("click", function(){
-        showAlarm("수정을 완료합니다.", function(result){
-            if(result){
-                document.querySelector("#btn_modify").style.cssText = "display: inline-block;"
-                document.querySelector("#btn_modify_end").style.cssText = "display: none;"
-            } else {
-                hideAlarm();
-            }
-        });
-    })
+        function endModify(){
+			hideAlarm();
+            document.querySelector("#btn_modify").style.cssText = "display: inline-block;"
+            document.querySelector("#btn_modify_end").style.cssText = "display: none;"
+            btnOk.removeEventListener("click", endModify);
+        }
+        showAlarm("수정을 완료합니다.");
+        btnOk.addEventListener("click", endModify);
+    });    
 
     document.querySelector("#btn_delete").addEventListener("click", function(){
-        showAlarm("선택한 계획을 삭제합니다.", function(result){
-            if(result){
-                console.log("클릭")
-            } else {
-                hideAlarm();
-            }
-        });
-    })
+        showAlarm("선택한 계획을 삭제합니다.");
+    });    
 
     document.querySelector("#btn_save").addEventListener("click", function(){
-        showAlarm("계획을 저장합니다.", function(result){
-            if(result){
-                console.log("클릭")
-            } else {
-                hideAlarm();
-            }
-        });
-    })
-    
-})
-
-
-
+        showAlarm("계획을 저장합니다.");    
+	});
+});
