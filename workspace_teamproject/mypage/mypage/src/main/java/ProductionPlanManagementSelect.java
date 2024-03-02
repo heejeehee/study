@@ -17,20 +17,20 @@ import javax.servlet.http.HttpServletResponse;
 import mypage.ProductPlanManagementDTO;
 
 @WebServlet("/ppms")
-public class ProductionPlanManagementServlet extends HttpServlet {
+public class ProductionPlanManagementSelect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		controller(request, response);
+		selector(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		controller(request, response);
+		selector(request, response);
 	}
 
-	protected void controller(HttpServletRequest request, HttpServletResponse response) {
+	protected void selector(HttpServletRequest request, HttpServletResponse response) {
 		List list = new ArrayList();
 		try {
 			request.setCharacterEncoding("utf-8");
@@ -58,7 +58,7 @@ public class ProductionPlanManagementServlet extends HttpServlet {
 			query += " SELECT * FROM production_plan_temp ppt";
 			query += " LEFT OUTER JOIN outgoing_directions_temp odt ON ppt.outgoing_code = odt.outgoing_code";
 			query += " LEFT OUTER JOIN item_registration_temp irt ON odt.item_code = irt.item_code";
-			System.out.println("query문 작성 성공");
+			System.out.println("select문 작성 성공");
 			
 			// SQL 실행 준비
 			PreparedStatement ps = con.prepareStatement(query);

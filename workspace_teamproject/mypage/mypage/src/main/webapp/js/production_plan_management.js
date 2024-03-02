@@ -5,93 +5,105 @@ checkEvent(1);
 
 // 테이블 생성
 function makeTable(tableNum, theadId, x, y) {
-    let thead = document.querySelector(theadId);
+	let thead = document.querySelector(theadId);
 
-    for (let i = 1; i <= x; i++) {
-        let tr = document.createElement('tr');
-        thead.appendChild(tr);
-        for (let j = 1; j <= y; j++) {
-            let th = document.createElement('th');
-            tr.appendChild(th);
-            th.setAttribute("id", `thead${tableNum}_${i}_${j}`);
-        }
-    }
+	for (let i = 1; i <= x; i++) {
+		let tr = document.createElement('tr');
+		thead.appendChild(tr);
+		for (let j = 1; j <= y; j++) {
+			let th = document.createElement('th');
+			tr.appendChild(th);
+			th.setAttribute("id", `thead${tableNum}_${i}_${j}`);
+		}
+	}
 }
 
 // 1줄 추가
 function addRow() {
 	console.log()
-    let tbody = document.getElementById("plan_table_tbody"); // 테이블 ID를 적절히 변경해주세요
-    let newRow = tbody.insertRow(tbody.rows.length);
-    
-    let cell1 = newRow.insertCell(0);
-    cell1.className = "checkboxcell";
-    cell1.style.textAlign = "center";
-    cell1.innerHTML = '<input type="checkbox" class="table1_chkChild">';
-    
-    let cell2 = newRow.insertCell(1);
-    cell2.className = "table1_plancode";
-    cell2.innerHTML = '';
-    
-    for (let i = 2; i <= 9; i++) {
-        let cell = newRow.insertCell(i);
-        cell.innerHTML = "";
-    }
+	let tbody = document.getElementById("plan_table_tbody"); // 테이블 ID를 적절히 변경해주세요
+	let newRow = tbody.insertRow(tbody.rows.length);
+
+	let cell1 = newRow.insertCell(0);
+	cell1.className = "checkboxcell";
+	cell1.style.textAlign = "center";
+	cell1.innerHTML = '<input type="checkbox" class="table1_chkChild">';
+
+	let cell2 = newRow.insertCell(1);
+	cell2.className = "table1_plancode";
+	cell2.innerHTML = '';
+
+	let cell3 = newRow.insertCell(2);
+	cell3.innerHTML = "<input type='text' name='itemCode' value='' readonly>";
+	let cell4 = newRow.insertCell(3);
+	cell4.innerHTML = "<input type='text' name='itemName' value='' readonly>";
+	let cell5 = newRow.insertCell(4);
+	cell5.innerHTML = "<input type='text' name='outgoing' value='' readonly>";
+	let cell6 = newRow.insertCell(5);
+	cell6.innerHTML = "<input type='text' name='quantity' value='' readonly>";
+	let cell7 = newRow.insertCell(6);
+	cell7.innerHTML = "<input type='text' name='makeAmount' value='' readonly>";
+	let cell8 = newRow.insertCell(7);
+	cell8.innerHTML = "<input type='text' name='remainAmount' value='' readonly>";
+	let cell9 = newRow.insertCell(8);
+	cell9.innerHTML = "<input type='text' name='startdate' value='' readonly>";
+	let cell10 = newRow.insertCell(9);
+	cell10.innerHTML = "<input type='text' name='enddate' value='' readonly>";
 }
 
 
 // 컬럼명 생성
 function makeColName(tableNum) {
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("table1_chkAll")
-    document.querySelector(`#thead${tableNum}_1_1`).appendChild(checkbox);
-    document.querySelector(`#thead${tableNum}_1_2`).appendChild(document.createTextNode("생산계획코드"))
-    document.querySelector(`#thead${tableNum}_1_3`).appendChild(document.createTextNode("품목코드"))
-    document.querySelector(`#thead${tableNum}_1_4`).appendChild(document.createTextNode("제품명"))
-    document.querySelector(`#thead${tableNum}_1_5`).appendChild(document.createTextNode("납품처"))
-    document.querySelector(`#thead${tableNum}_1_6`).appendChild(document.createTextNode("납품요구수량"))
-    document.querySelector(`#thead${tableNum}_1_7`).appendChild(document.createTextNode("생산계획수량"))
-    document.querySelector(`#thead${tableNum}_1_8`).appendChild(document.createTextNode("예상보유재고"))
-    document.querySelector(`#thead${tableNum}_1_9`).appendChild(document.createTextNode("착수일"))
-    document.querySelector(`#thead${tableNum}_1_10`).appendChild(document.createTextNode("완료일"))
+	let checkbox = document.createElement("input");
+	checkbox.type = "checkbox";
+	checkbox.classList.add("table1_chkAll")
+	document.querySelector(`#thead${tableNum}_1_1`).appendChild(checkbox);
+	document.querySelector(`#thead${tableNum}_1_2`).appendChild(document.createTextNode("생산계획코드"))
+	document.querySelector(`#thead${tableNum}_1_3`).appendChild(document.createTextNode("품목코드"))
+	document.querySelector(`#thead${tableNum}_1_4`).appendChild(document.createTextNode("제품명"))
+	document.querySelector(`#thead${tableNum}_1_5`).appendChild(document.createTextNode("납품처"))
+	document.querySelector(`#thead${tableNum}_1_6`).appendChild(document.createTextNode("납품요구수량"))
+	document.querySelector(`#thead${tableNum}_1_7`).appendChild(document.createTextNode("생산계획수량"))
+	document.querySelector(`#thead${tableNum}_1_8`).appendChild(document.createTextNode("예상보유재고"))
+	document.querySelector(`#thead${tableNum}_1_9`).appendChild(document.createTextNode("착수일"))
+	document.querySelector(`#thead${tableNum}_1_10`).appendChild(document.createTextNode("완료일"))
 }
 
 // 전체선택 이벤트
 function checkEvent(tableNum) {
 
-    document.querySelector(`.table${tableNum}_chkAll`).addEventListener("click", function (e) {
-        if (document.querySelector(`.table${tableNum}_chkAll`).checked == true) {
-            document.querySelectorAll(`.table${tableNum}_chkChild`).forEach(function (chkChild) {
-                chkChild.checked = true;
-            })
-        } else {
-            document.querySelectorAll(`.table${tableNum}_chkChild`).forEach(function (chkChild) {
-                chkChild.checked = false;
-            })
-        }
-    })
+	document.querySelector(`.table${tableNum}_chkAll`).addEventListener("click", function(e) {
+		if (document.querySelector(`.table${tableNum}_chkAll`).checked == true) {
+			document.querySelectorAll(`.table${tableNum}_chkChild`).forEach(function(chkChild) {
+				chkChild.checked = true;
+			})
+		} else {
+			document.querySelectorAll(`.table${tableNum}_chkChild`).forEach(function(chkChild) {
+				chkChild.checked = false;
+			})
+		}
+	})
 
-    let checkboxes = document.querySelectorAll(`.table${tableNum}_chkChild`);
+	let checkboxes = document.querySelectorAll(`.table${tableNum}_chkChild`);
 
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("click", function (e) {
-            let allbox = checkboxes.length;
-            let nowbox = 0;
+	checkboxes.forEach(function(checkbox) {
+		checkbox.addEventListener("click", function(e) {
+			let allbox = checkboxes.length;
+			let nowbox = 0;
 
-            checkboxes.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    nowbox++;
-                }
-            });
+			checkboxes.forEach(function(checkbox) {
+				if (checkbox.checked) {
+					nowbox++;
+				}
+			});
 
-            if (allbox === nowbox) {
-                document.querySelector(`.table${tableNum}_chkAll`).checked = true;
-            } else {
-                document.querySelector(`.table${tableNum}_chkAll`).checked = false;
-            }
-        });
-    });
+			if (allbox === nowbox) {
+				document.querySelector(`.table${tableNum}_chkAll`).checked = true;
+			} else {
+				document.querySelector(`.table${tableNum}_chkAll`).checked = false;
+			}
+		});
+	});
 
 }
 
@@ -100,107 +112,143 @@ function showAlarm(message) {
 	let alarm = document.querySelector("#alarm_wrap");
 	let overlay = document.querySelector("#overlay");
 	let txt = document.querySelector("#message");
-	
+
 	txt.innerHTML = "<span id='message'>" + message + "</span>"
-	
+
 	alarm.style.cssText = "display: block;"
 	overlay.style.cssText = "display: block;"
 }
-function hideAlarm(){
-    let alarm = document.querySelector("#alarm_wrap");
-    let overlay = document.querySelector("#overlay");
-    
-    alarm.style.cssText = "display: none;"
-    overlay.style.cssText = "display: none;"
+function hideAlarm() {
+	let alarm = document.querySelector("#alarm_wrap");
+	let overlay = document.querySelector("#overlay");
+
+	alarm.style.cssText = "display: none;"
+	overlay.style.cssText = "display: none;"
 }
 
 // 랜덤코드생성
 function randomNumber() {
-   	let randomNumber = Math.floor(Math.random() * 100000000);
-    return randomNumber.toString().padStart(8, '0');
+	let randomNumber = Math.floor(Math.random() * 100000000);
+	return randomNumber.toString().padStart(8, '0');
 }
 
 // 버튼클릭기능
-window.addEventListener("load", function(){
+window.addEventListener("load", function() {
 	let btnOk = document.querySelector("#btn_ok")
 	let btnCancel = document.querySelector("#btn_cancel")
 	// 취소버튼 기능 미리넣기
-	btnCancel.addEventListener("click", function(){
+	btnCancel.addEventListener("click", function() {
 		hideAlarm();
 	})
-	
-    document.querySelector("#btn_auto").addEventListener("click", function () {
-	   	function moveLocation(){
+
+	document.querySelector("#btn_auto").addEventListener("click", function() {
+		function moveLocation() {
 			hideAlarm();
 			window.location.href = "http://127.0.0.1:8080/mypage/ppms"
-		   	btnOk.removeEventListener("click", moveLocation)
+			btnOk.removeEventListener("click", moveLocation)
 		}
-	    showAlarm("계획을 자동으로 생성하시겠습니까?");
-	    btnOk.addEventListener("click", moveLocation);
+		showAlarm("계획을 자동으로 생성하시겠습니까?");
+		btnOk.addEventListener("click", moveLocation);
 	});
 
-    document.querySelector("#btn_plancode").addEventListener("click", function(){
-        function giveCode(){
+	document.querySelector("#btn_plancode").addEventListener("click", function() {
+		function giveCode() {
 			hideAlarm();
-	        if(document.getElementById("plan_table").getElementsByTagName("tr").length > 1){
+			if (document.getElementById("plan_table").getElementsByTagName("tr").length > 1) {
 				let planCodeTable = document.getElementById("plan_table").getElementsByClassName("table1_plancode");
-					for(i=0; i<planCodeTable.length; i++){
-						planCodeTable[i].innerHTML = randomNumber();
-					}
-			btnOk.removeEventListener("click", giveCode);
+				for (i = 0; i < planCodeTable.length; i++) {
+					planCodeTable[i].innerHTML = randomNumber();
+				}
+				btnOk.removeEventListener("click", giveCode);
 			} else {
 				function okIsOut() {
-                	hideAlarm();
-                	btnOk.removeEventListener("click", okIsOut);
-            	}
-            	showAlarm("코드를 부여할 계획이 없습니다! <br>계획을 생성한 뒤 시도하세요.");
-            	btnOk.addEventListener("click", okIsOut);
-			}			
+					hideAlarm();
+					btnOk.removeEventListener("click", okIsOut);
+				}
+				showAlarm("코드를 부여할 계획이 없습니다! <br>계획을 생성한 뒤 시도하세요.");
+				btnOk.addEventListener("click", okIsOut);
+			}
 			btnOk.removeEventListener("click", giveCode);
 		}
-		
-        showAlarm("계획코드를 부여합니다.");
-        btnOk.addEventListener("click", giveCode);
-    });
 
-    document.querySelector("#btn_add").addEventListener("click", function(){        
-        function doAddRow(){
+		showAlarm("계획코드를 부여합니다.");
+		btnOk.addEventListener("click", giveCode);
+	});
+
+	document.querySelector("#btn_add").addEventListener("click", function() {
+		function doAddRow() {
 			hideAlarm();
 			addRow();
 			btnOk.removeEventListener("click", doAddRow)
 		}
-        showAlarm("계획을 추가합니다.");
+		showAlarm("계획을 추가합니다.");
 		btnOk.addEventListener("click", doAddRow);
-    });
+	});
 
-    document.querySelector("#btn_modify").addEventListener("click", function(){
-        function doModify(){
-			hideAlarm();
-            document.querySelector("#btn_modify").style.cssText = "display: none;"
-            document.querySelector("#btn_modify_end").style.cssText = "display: inline-block;"
-            btnOk.removeEventListener("click", doModify);
+	document.querySelector("#btn_modify").addEventListener("click", function() {
+		function doModify() {
+			if (document.querySelectorAll('.table1_chkChild:checked').length === 0) {
+				function okIsOut() {
+					hideAlarm();
+					btnOk.removeEventListener("click", okIsOut);
+				}
+				showAlarm("수정할 계획을 하나 이상 선택해 주세요.");
+				btnOk.addEventListener("click", okIsOut);
+			} else {
+				hideAlarm();
+				document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
+					// 부모 노드의 부모 노드의 하위 모든 input[type="text"] 요소에 대해 readOnly를 해제
+					checkbox.parentNode.parentNode.querySelectorAll('input[type="text"]').forEach(function(input) {
+						input.readOnly = false;
+					});
+				});
+				document.querySelector("#btn_modify").style.cssText = "display: none;"
+				document.querySelector("#btn_modify_end").style.cssText = "display: inline-block;"
+				btnOk.removeEventListener("click", doModify);
+			}
 		}
-        showAlarm("선택한 계획을 수정합니다.");
-        btnOk.addEventListener("click", doModify);
-    }); 
-    
-    
-    document.querySelector("#btn_modify_end").addEventListener("click", function(){
-        function endModify(){
+		showAlarm("선택한 계획을 수정합니다.");
+		btnOk.addEventListener("click", doModify);
+	});
+
+
+	document.querySelector("#btn_modify_end").addEventListener("click", function() {
+		function endModify() {
 			hideAlarm();
-            document.querySelector("#btn_modify").style.cssText = "display: inline-block;"
-            document.querySelector("#btn_modify_end").style.cssText = "display: none;"
-            btnOk.removeEventListener("click", endModify);
-        }
-        showAlarm("수정을 완료합니다.");
-        btnOk.addEventListener("click", endModify);
-    });    
+			document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
+				// 부모 노드의 부모 노드의 하위 모든 input[type="text"] 요소에 대해 readOnly를 해제
+				checkbox.parentNode.parentNode.querySelectorAll('input[type="text"]').forEach(function(input) {
+					input.readOnly = true;
+				});
+			});
+			document.querySelector("#btn_modify").style.cssText = "display: inline-block;"
+			document.querySelector("#btn_modify_end").style.cssText = "display: none;"
+			btnOk.removeEventListener("click", endModify);
+		}
+		showAlarm("수정을 완료합니다.");
+		btnOk.addEventListener("click", endModify);
+	});
 
-    document.querySelector("#btn_delete").addEventListener("click", function(){
-        showAlarm("선택한 계획을 삭제합니다.");
-    });    
+	document.querySelector("#btn_delete").addEventListener("click", function() {
+		function delRow() {
+			hideAlarm();
+			document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
+				let row = checkbox.parentNode.parentNode;
+				row.parentNode.removeChild(row);
+			});
+			btnOk.removeEventListener("click", delRow);
+		}
+		showAlarm("선택한 계획을 삭제합니다.<br>삭제한 뒤에는 내용을 되돌릴 수 없습니다!");
+		btnOk.addEventListener("click", delRow);
+	});
 
-    document.querySelector("#btn_save").addEventListener("click", function(){
-        showAlarm("계획을 저장합니다.");    
+	document.querySelector("#btn_save").addEventListener("click", function() {
+		function okIsSubmit() {
+			hideAlarm();
+			document.querySelector("#myForm").submit();
+			btnOk.removeEventListener("click", okIsSubmit);
+		}
+		showAlarm("계획을 저장합니다.");
+		btnOk.addEventListener("click", okIsSubmit);
 	});
 });
