@@ -12,89 +12,90 @@
 </head>
 
 <body>
-	<%@ include file="../mainheader.jsp"%>
-	<!-- content -->
-	<div id="content">
+	<form id=myForm method="post">
+		<%@ include file="../mainheader.jsp"%>
+		<!-- content -->
+		<div id="content">
 
-		<!-- div id="headerj" 시작 -->
-		<div id="headerj">생산계획관리</div>
-		<!-- div id="headerj" 끝 -->
+			<!-- div id="headerj" 시작 -->
+			<div id="headerj">생산계획관리</div>
+			<!-- div id="headerj" 끝 -->
 
-		<!-- updiv -->
-		<div class="updiv">
+			<!-- updiv -->
+			<div class="updiv">
 
-			<!-- header1 div -->
-			<div id="header1_div">
-				<!-- 버튼 div -->
-				
+				<!-- header1 div -->
+				<div id="header1_div">
+					<!-- 버튼 div -->
+
 					<div id="btn_wrap_div">
 						<button type="button" id="btn_auto">계획자동생성</button>
 						<button type="button" id="btn_plancode">계획코드부여</button>
 						<button type="button" id="btn_add">추가</button>
+						<button type="button" id="btn_add_end">추가완료</button>
 						<button type="button" id="btn_modify">수정</button>
 						<button type="button" id="btn_modify_end">수정완료</button>
 						<button type="button" id="btn_delete">삭제</button>
 						<button type="button" id="btn_save">저장</button>
 					</div>
-			</div>
-			<!-- header1 div 끝 -->
+				</div>
+				<!-- header1 div 끝 -->
 
-			<div id="plan_table_div">
+				<div id="plan_table_div">
 
-				<table id="plan_table">
-					<thead id="plan_table_thead">
+					<table id="plan_table">
+						<thead id="plan_table_thead">
 
-					</thead>
-					<%
-					List list = (List) request.getAttribute("list");
-					%>
-
-					<tbody id="plan_table_tbody">
-					<form id="myForm" method="post" action="http://127.0.0.1:8080/mypage/ppmi">
+						</thead>
 						<%
-						try {
-							for (int i = 0; i < list.size(); i++) {
-								ProductPlanManagementDTO item = (ProductPlanManagementDTO) list.get(i);
+						List list = (List) request.getAttribute("list");
 						%>
-						<tr>
-							<td class="checkboxcell" style="text-align: center;"><input
-								type="checkbox" class="table1_chkChild"></td>
-							<td class="table1_plancode" style="min-width: 97px;"></td>
-							<td><input type="text" name="itemCode"
-								value="<%=item.getItemCode()%>" readonly></td>
-							<td><input type="text" name="itemName"
-								value="<%=item.getItemName()%>" readonly></td>
-							<td><input type="text" name="outgoing"
-								value="<%=item.getOutgoing()%>" readonly></td>
-							<td><input type="text" name="quantity"
-								value="<%=item.getQuantity()%>" readonly></td>
-							<td><input type="text" name="makeAmount"
-								value="<%=item.getMakeAmount()%>" readonly></td>
-							<td><input type="text" name="remainAmount"
-								value="<%=item.getRemainAmount()%>" readonly></td>
-							<td><input type="text" name="startdate"
-								value="<%=item.getStartdate()%>" readonly></td>
-							<td><input type="text" name="enddate"
-								value="<%=item.getEnddate()%>" readonly></td>
-						</tr>
-						<%
-						}
-						} catch (Exception e) {
-						e.printStackTrace();
-						}
-						%>
-					</tbody>
-					</form>
-				</table>
+
+						<tbody id="plan_table_tbody">
+							<%
+							try {
+								for (int i = 0; i < list.size(); i++) {
+									ProductPlanManagementDTO item = (ProductPlanManagementDTO) list.get(i);
+							%>
+							<tr>
+								<td class="checkboxcell" style="text-align: center;"><input
+									type="checkbox" class="table1_chkChild"></td>
+								<td class="table1_plancode" style="min-width: 97px;"><input
+									type="text" class="planCode" name="planCode" value="" readonly></td>
+								<td><input type="text" name="itemCode"
+									value="<%=item.getItemCode()%>" readonly></td>
+								<td><input type="text" name="itemName"
+									value="<%=item.getItemName()%>" readonly></td>
+								<td><input type="text" name="outgoing"
+									value="<%=item.getOutgoing()%>" readonly></td>
+								<td><input type="text" name="quantity"
+									value="<%=item.getQuantity()%>" readonly></td>
+								<td><input type="text" name="makeAmount"
+									value="<%=item.getMakeAmount()%>" readonly></td>
+								<td><input type="text" name="remainAmount"
+									value="<%=item.getRemainAmount()%>" readonly></td>
+								<td><input type="text" name="startdate"
+									value="<%=item.getStartdate()%>" readonly></td>
+								<td><input type="text" name="enddate"
+									value="<%=item.getEnddate()%>" readonly></td>
+							</tr>
+							<%
+							}
+							} catch (Exception e) {
+							e.printStackTrace();
+							}
+							%>
+						</tbody>
+					</table>
+
+				</div>
+
 
 			</div>
-
+			<!-- updiv 끝 -->
 
 		</div>
-		<!-- updiv 끝 -->
-
-	</div>
-	<!-- content 끝 -->
+		<!-- content 끝 -->
 
 
 
@@ -104,17 +105,18 @@
 
 
 
-	<div id="alarm_wrap">
-		<div id="message_div">
-			<span id="message">메세지입니다.</span>
+		<div id="alarm_wrap">
+			<div id="message_div">
+				<span id="message">메세지입니다.</span>
+			</div>
+			<div id="alarm_btn_wrap">
+				<button type="button" id="btn_cancel">닫기</button>
+				<button type="button" id="btn_ok">확인</button>
+			</div>
 		</div>
-		<div id="alarm_btn_wrap">
-			<button type="button" id="btn_cancel">닫기</button>
-			<button type="button" id="btn_ok">확인</button>
-		</div>
-	</div>
 
-	<div id="overlay"></div>
+		<div id="overlay"></div>
+	</form>
 </body>
 
 <link rel="stylesheet"

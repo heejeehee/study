@@ -106,7 +106,7 @@ public class ProductionPlanManagementSelect extends HttpServlet {
 		try {
 			request.getRequestDispatcher("/productionplan/production_plan_management.jsp").forward(request, response);
 //			response.sendRedirect(request.getContextPath() + "/productionplan/production_plan_management.jsp");
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

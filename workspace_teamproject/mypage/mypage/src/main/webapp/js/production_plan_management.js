@@ -27,28 +27,28 @@ function addRow() {
 	let cell1 = newRow.insertCell(0);
 	cell1.className = "checkboxcell";
 	cell1.style.textAlign = "center";
-	cell1.innerHTML = '<input type="checkbox" class="table1_chkChild">';
+	cell1.innerHTML = '<input type="checkbox" class="table1_chkChild" checked>';
 
 	let cell2 = newRow.insertCell(1);
 	cell2.className = "table1_plancode";
-	cell2.innerHTML = '';
+	cell2.innerHTML = "<input type='text' class='planCode' name='planCode' value='' readonly>";
 
 	let cell3 = newRow.insertCell(2);
-	cell3.innerHTML = "<input type='text' name='itemCode' value='' readonly>";
+	cell3.innerHTML = "<input type='text' name='itemCodeAdd' value=''>";
 	let cell4 = newRow.insertCell(3);
-	cell4.innerHTML = "<input type='text' name='itemName' value='' readonly>";
+	cell4.innerHTML = "<input type='text' name='itemNameAdd' value=''>";
 	let cell5 = newRow.insertCell(4);
-	cell5.innerHTML = "<input type='text' name='outgoing' value='' readonly>";
+	cell5.innerHTML = "<input type='text' name='outgoingAdd' value=''>";
 	let cell6 = newRow.insertCell(5);
-	cell6.innerHTML = "<input type='text' name='quantity' value='' readonly>";
+	cell6.innerHTML = "<input type='text' name='quantityAdd' value=''>";
 	let cell7 = newRow.insertCell(6);
-	cell7.innerHTML = "<input type='text' name='makeAmount' value='' readonly>";
+	cell7.innerHTML = "<input type='text' name='makeAmountAdd' value=''>";
 	let cell8 = newRow.insertCell(7);
-	cell8.innerHTML = "<input type='text' name='remainAmount' value='' readonly>";
+	cell8.innerHTML = "<input type='text' name='remainAmountAdd' value=''>";
 	let cell9 = newRow.insertCell(8);
-	cell9.innerHTML = "<input type='text' name='startdate' value='' readonly>";
+	cell9.innerHTML = "<input type='text' name='startdateAdd' value=''>";
 	let cell10 = newRow.insertCell(9);
-	cell10.innerHTML = "<input type='text' name='enddate' value='' readonly>";
+	cell10.innerHTML = "<input type='text' name='enddateAdd' value=''>";
 }
 
 
@@ -155,9 +155,9 @@ window.addEventListener("load", function() {
 		function giveCode() {
 			hideAlarm();
 			if (document.getElementById("plan_table").getElementsByTagName("tr").length > 1) {
-				let planCodeTable = document.getElementById("plan_table").getElementsByClassName("table1_plancode");
-				for (i = 0; i < planCodeTable.length; i++) {
-					planCodeTable[i].innerHTML = randomNumber();
+				let planCode = document.getElementById("plan_table").getElementsByClassName("planCode");
+				for (i = 0; i < planCode.length; i++) {
+					planCode[i].value = randomNumber();
 				}
 				btnOk.removeEventListener("click", giveCode);
 			} else {
@@ -179,10 +179,33 @@ window.addEventListener("load", function() {
 		function doAddRow() {
 			hideAlarm();
 			addRow();
+			document.querySelector("#btn_add").style.cssText = "display: none;"
+			document.querySelector("#btn_add_end").style.cssText = "display: inline-block;"
 			btnOk.removeEventListener("click", doAddRow)
 		}
-		showAlarm("계획을 추가합니다.");
+		showAlarm("계획을 추가합니다.<br>추가 후에는 추가완료 버튼을 꼭 눌러주세요!");
 		btnOk.addEventListener("click", doAddRow);
+	});
+
+	document.querySelector("#btn_add_end").addEventListener("click", function() {
+		function endAdd() {
+			hideAlarm();
+			document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
+				checkbox.parentNode.parentNode.querySelectorAll('input[type="text"]').forEach(function(input) {
+					input.readOnly = true;
+				});
+				checkbox.checked = false;
+			});
+			
+			document.getElementById('myForm').action = "http://127.0.0.1:8080/mypage/ppmi"
+			btnOk.type = "submit";
+			
+			document.querySelector("#btn_add").style.cssText = "display: inline-block;"
+			document.querySelector("#btn_add_end").style.cssText = "display: none;"
+			btnOk.removeEventListener("click", endAdd);
+		}
+		showAlarm("추가를 완료합니다.");
+		btnOk.addEventListener("click", endAdd);
 	});
 
 	document.querySelector("#btn_modify").addEventListener("click", function() {
@@ -207,7 +230,7 @@ window.addEventListener("load", function() {
 				btnOk.removeEventListener("click", doModify);
 			}
 		}
-		showAlarm("선택한 계획을 수정합니다.");
+		showAlarm("선택한 계획을 수정합니다.<br>수정 후에는 수정완료 버튼을 꼭 눌러주세요!");
 		btnOk.addEventListener("click", doModify);
 	});
 
@@ -216,10 +239,10 @@ window.addEventListener("load", function() {
 		function endModify() {
 			hideAlarm();
 			document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
-				// 부모 노드의 부모 노드의 하위 모든 input[type="text"] 요소에 대해 readOnly를 해제
 				checkbox.parentNode.parentNode.querySelectorAll('input[type="text"]').forEach(function(input) {
 					input.readOnly = true;
 				});
+				checkbox.checked = false;
 			});
 			document.querySelector("#btn_modify").style.cssText = "display: inline-block;"
 			document.querySelector("#btn_modify_end").style.cssText = "display: none;"
