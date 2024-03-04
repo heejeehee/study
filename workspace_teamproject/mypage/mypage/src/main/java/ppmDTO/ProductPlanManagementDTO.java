@@ -1,4 +1,4 @@
-package mypage;
+package ppmDTO;
 
 import java.sql.Date;
 
