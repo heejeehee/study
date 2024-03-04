@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,23 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mypage.ProductPlanManagementDTO;
-
-@WebServlet("/ppmi")
-public class ProductionPlanManagementInsert extends HttpServlet {
+@WebServlet("/ppmu")
+public class ProductionPlanManagementUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		insertItem(request, response);
+		updater(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		insertItem(request, response);
+		updater(request, response);
 	}
 
-	protected void insertItem(HttpServletRequest request, HttpServletResponse response) {
+	protected void updater(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.setCharacterEncoding("utf-8");
 			response.setContentType("text/html; charset=utf-8;");
@@ -51,47 +48,50 @@ public class ProductionPlanManagementInsert extends HttpServlet {
 			System.out.println("Connection 생성 성공");
 
 			// 데이터 변수 지정
-			String itemCode = request.getParameter("itemCodeAdd");
-			String itemName = request.getParameter("itemNameAdd");
-			String deliveryPlace = request.getParameter("deliveryPlaceAdd");
-			String deliveryAmount = request.getParameter("deliveryAmountAdd");
-			String productionAmount = request.getParameter("productionAmountAdd");
-			String remainAmount = request.getParameter("remainAmountAdd");
-			String startdate = request.getParameter("startdateAdd");
-			String enddate = request.getParameter("enddateAdd");
+			String itemCode = request.getParameter("itemCodeUpdate");
+			String itemName = request.getParameter("itemNameUpdate");
+			String deliveryPlace = request.getParameter("deliveryPlaceUpdate");
+			String deliveryAmount = request.getParameter("deliveryAmountUpdate");
+			String productionAmount = request.getParameter("productionAmountUpdate");
+			String remainAmount = request.getParameter("remainAmountUpdate");
+			String startdate = request.getParameter("startdateUpdate");
+			String enddate = request.getParameter("enddateUpdate");
+			String ppc = request.getParameter("chkChild");
 
+			System.out.println("itemCode: " + itemCode);
+			System.out.println("itemName: " + itemName);
+			System.out.println("deliveryPlace: " + deliveryPlace);
+			System.out.println("deliveryAmount: " + deliveryAmount);
+			System.out.println("productionAmount: " + productionAmount);
+			System.out.println("remainAmount: " + remainAmount);
+			System.out.println("startdate: " + startdate);
+			System.out.println("enddate: " + enddate);
+			System.out.println("ppc: " + ppc);
+			
 			// 변수 타입 변환
-			int ItemCodeInt = Integer.parseInt(itemCode);
+			int itemCodeInt = Integer.parseInt(itemCode);
 			int deliveryAmountInt = Integer.parseInt(deliveryAmount);
 			int productionAmountInt = Integer.parseInt(productionAmount);
 			int remainAmountInt = Integer.parseInt(remainAmount);
 			Date cvStartdate = Date.valueOf(startdate);
 			Date cvEnddate = Date.valueOf(enddate);
+			
 
 			// SQL 작성
-			String query = "INSERT INTO production_plan_temp (";
-			query += "production_plan_code,";
-			query += "item_code,";
-			query += "item_name,";
-			query += "delivery_place,";
-			query += "delivery_amount,";
-			query += "expected_production_amount,";
-			query += "expected_remain_amount,";
-			query += "expected_start_date,";
-			query += "expected_end_date";
-			query += ")";
-			query += "VALUES (";
-			query += "'PPC' || PPC_SEQ.nextval, ";
-			query += "?, ";
-			query += "?, ";
-			query += "?, ";
-			query += "?, ";
-			query += "?, ";
-			query += "?, ";
-			query += "TO_DATE(?, 'YYYY-MM-DD'), ";
-			query += "TO_DATE(?, 'YYYY-MM-DD')";
-			query += ")";
-			System.out.println("production_plan_temp insert문 작성 성공");
+			String query = "";
+			query += " UPDATE production_plan_temp";
+			query += " SET";
+			query += " item_code = ?,";
+			query += " item_name = ?,";
+			query += " delivery_place = ?,";
+			query += " delivery_amount = ?,";
+			query += " expected_production_amount = ?,";
+			query += " expected_remain_amount = ?,";
+			query += " expected_start_date = TO_DATE(?, 'YYYY-MM-DD'),";
+			query += " expected_end_date = TO_DATE(?, 'YYYY-MM-DD')";
+			query += " WHERE";
+			query += " production_plan_code = ?";
+			System.out.println("production_plan_temp update문 작성 성공");
 			System.out.println(query);
 
 			// SQL 실행 준비
@@ -101,17 +101,7 @@ public class ProductionPlanManagementInsert extends HttpServlet {
 			// 데이터 가져오기
 			System.out.println("데이터 가져오는 중...");
 			
-			System.out.println("값 확인:");
-			System.out.println("1: " + ItemCodeInt);
-			System.out.println("2: " + itemName);
-			System.out.println("3: " + deliveryPlace);
-			System.out.println("4: " + deliveryAmountInt);
-			System.out.println("5: " + productionAmountInt);
-			System.out.println("6: " + remainAmountInt);
-			System.out.println("7: " + cvStartdate);
-			System.out.println("8: " + cvEnddate);
-
-			ps.setInt(1, ItemCodeInt);
+			ps.setInt(1, itemCodeInt);
 			ps.setString(2, itemName);
 			ps.setString(3, deliveryPlace);
 			ps.setInt(4, deliveryAmountInt);
@@ -119,7 +109,7 @@ public class ProductionPlanManagementInsert extends HttpServlet {
 			ps.setInt(6, remainAmountInt);
 			ps.setDate(7, cvStartdate);
 			ps.setDate(8, cvEnddate);
-
+			ps.setString(9, ppc);
 			// SQL 실행
 			ps.executeUpdate();
 

@@ -29,8 +29,7 @@
 					<!-- 버튼 div -->
 
 					<div id="btn_wrap_div">
-						<button type="button" id="btn_auto">계획자동생성</button>
-						<button type="button" id="btn_plancode">계획코드부여</button>
+						<button type="button" id="btn_auto">계획불러오기</button>
 						<button type="button" id="btn_add">추가</button>
 						<button type="button" id="btn_add_end">추가완료</button>
 						<button type="button" id="btn_modify">수정</button>
@@ -59,25 +58,26 @@
 							%>
 							<tr>
 								<td class="checkboxcell" style="text-align: center;"><input
-									type="checkbox" class="table1_chkChild"></td>
-								<td class="table1_plancode" style="min-width: 97px;"><input
-									type="text" class="planCode" name="planCode" value="" readonly></td>
+									type="checkbox" class="table1_chkChild" name="chkChild"
+									value=<%=item.getPpc()%>></td>
+								<td><input type="text" name="planCode"
+									value=<%=item.getPpc()%> readonly></td>
 								<td><input type="text" name="itemCode"
-									value="<%=item.getItemCode()%>" readonly></td>
+									value=<%=item.getItemCode()%> readonly></td>
 								<td><input type="text" name="itemName"
-									value="<%=item.getItemName()%>" readonly></td>
-								<td><input type="text" name="outgoing"
-									value="<%=item.getOutgoing()%>" readonly></td>
-								<td><input type="text" name="quantity"
-									value="<%=item.getQuantity()%>" readonly></td>
-								<td><input type="text" name="makeAmount"
-									value="<%=item.getMakeAmount()%>" readonly></td>
+									value=<%=item.getItemName()%> readonly></td>
+								<td><input type="text" name="deliveryPlace"
+									value=<%=item.getDeliveryPlace()%> readonly></td>
+								<td><input type="text" name="deliveryAmount"
+									value=<%=item.getDeliveryAmount()%> readonly></td>
+								<td><input type="text" name="productionAmount"
+									value=<%=item.getProductionAmount()%> readonly></td>
 								<td><input type="text" name="remainAmount"
-									value="<%=item.getRemainAmount()%>" readonly></td>
+									value=<%=item.getRemainAmount()%> readonly></td>
 								<td><input type="text" name="startdate"
-									value="<%=item.getStartdate()%>" readonly></td>
+									value=<%=item.getStartdate()%> readonly></td>
 								<td><input type="text" name="enddate"
-									value="<%=item.getEnddate()%>" readonly></td>
+									value=<%=item.getEnddate()%> readonly></td>
 							</tr>
 							<%
 							}

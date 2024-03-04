@@ -30,25 +30,23 @@ function addRow() {
 	cell1.innerHTML = '<input type="checkbox" class="table1_chkChild" checked>';
 
 	let cell2 = newRow.insertCell(1);
-	cell2.className = "table1_plancode";
-	cell2.innerHTML = "<input type='text' class='planCode' name='planCode' value='' readonly>";
-
+	cell2.innerHTML = "<input type='text' name='planCodeAdd' value='' placeholder='자동생성됩니다.' readonly>";
 	let cell3 = newRow.insertCell(2);
-	cell3.innerHTML = "<input type='text' name='itemCodeAdd' value=''>";
+	cell3.innerHTML = "<input type='text' name='itemCodeAdd' value='' placeholder='num'>";
 	let cell4 = newRow.insertCell(3);
-	cell4.innerHTML = "<input type='text' name='itemNameAdd' value=''>";
+	cell4.innerHTML = "<input type='text' name='itemNameAdd' value='' placeholder='str'>";
 	let cell5 = newRow.insertCell(4);
-	cell5.innerHTML = "<input type='text' name='outgoingAdd' value=''>";
+	cell5.innerHTML = "<input type='text' name='deliveryPlaceAdd' value='' placeholder='str'>";
 	let cell6 = newRow.insertCell(5);
-	cell6.innerHTML = "<input type='text' name='quantityAdd' value=''>";
+	cell6.innerHTML = "<input type='text' name='deliveryAmountAdd' value='' placeholder='num'>";
 	let cell7 = newRow.insertCell(6);
-	cell7.innerHTML = "<input type='text' name='makeAmountAdd' value=''>";
+	cell7.innerHTML = "<input type='text' name='productionAmountAdd' value='' placeholder='num'>";
 	let cell8 = newRow.insertCell(7);
-	cell8.innerHTML = "<input type='text' name='remainAmountAdd' value=''>";
+	cell8.innerHTML = "<input type='text' name='remainAmountAdd' value='' placeholder='num'>";
 	let cell9 = newRow.insertCell(8);
-	cell9.innerHTML = "<input type='text' name='startdateAdd' value=''>";
+	cell9.innerHTML = "<input type='text' name='startdateAdd' value='' placeholder='xxxx-xx-xx'>";
 	let cell10 = newRow.insertCell(9);
-	cell10.innerHTML = "<input type='text' name='enddateAdd' value=''>";
+	cell10.innerHTML = "<input type='text' name='enddateAdd' value='' placeholder='xxxx-xx-xx'>";
 }
 
 
@@ -56,7 +54,8 @@ function addRow() {
 function makeColName(tableNum) {
 	let checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
-	checkbox.classList.add("table1_chkAll")
+	checkbox.classList.add("table1_chkAll");
+	checkbox.setAttribute("name", "chkAll");
 	document.querySelector(`#thead${tableNum}_1_1`).appendChild(checkbox);
 	document.querySelector(`#thead${tableNum}_1_2`).appendChild(document.createTextNode("생산계획코드"))
 	document.querySelector(`#thead${tableNum}_1_3`).appendChild(document.createTextNode("품목코드"))
@@ -147,32 +146,8 @@ window.addEventListener("load", function() {
 			window.location.href = "http://127.0.0.1:8080/mypage/ppms"
 			btnOk.removeEventListener("click", moveLocation)
 		}
-		showAlarm("계획을 자동으로 생성하시겠습니까?");
+		showAlarm("계획을 불러오시겠습니까?");
 		btnOk.addEventListener("click", moveLocation);
-	});
-
-	document.querySelector("#btn_plancode").addEventListener("click", function() {
-		function giveCode() {
-			hideAlarm();
-			if (document.getElementById("plan_table").getElementsByTagName("tr").length > 1) {
-				let planCode = document.getElementById("plan_table").getElementsByClassName("planCode");
-				for (i = 0; i < planCode.length; i++) {
-					planCode[i].value = randomNumber();
-				}
-				btnOk.removeEventListener("click", giveCode);
-			} else {
-				function okIsOut() {
-					hideAlarm();
-					btnOk.removeEventListener("click", okIsOut);
-				}
-				showAlarm("코드를 부여할 계획이 없습니다! <br>계획을 생성한 뒤 시도하세요.");
-				btnOk.addEventListener("click", okIsOut);
-			}
-			btnOk.removeEventListener("click", giveCode);
-		}
-
-		showAlarm("계획코드를 부여합니다.");
-		btnOk.addEventListener("click", giveCode);
 	});
 
 	document.querySelector("#btn_add").addEventListener("click", function() {
@@ -196,10 +171,10 @@ window.addEventListener("load", function() {
 				});
 				checkbox.checked = false;
 			});
-			
+
 			document.getElementById('myForm').action = "http://127.0.0.1:8080/mypage/ppmi"
 			btnOk.type = "submit";
-			
+
 			document.querySelector("#btn_add").style.cssText = "display: inline-block;"
 			document.querySelector("#btn_add_end").style.cssText = "display: none;"
 			btnOk.removeEventListener("click", endAdd);
@@ -210,20 +185,27 @@ window.addEventListener("load", function() {
 
 	document.querySelector("#btn_modify").addEventListener("click", function() {
 		function doModify() {
+			function okIsOut() {
+				hideAlarm();
+				btnOk.removeEventListener("click", okIsOut);
+			}
 			if (document.querySelectorAll('.table1_chkChild:checked').length === 0) {
-				function okIsOut() {
-					hideAlarm();
-					btnOk.removeEventListener("click", okIsOut);
-				}
-				showAlarm("수정할 계획을 하나 이상 선택해 주세요.");
+				showAlarm("수정할 계획을 선택해 주세요.");
+				btnOk.addEventListener("click", okIsOut);
+			} else if (document.querySelectorAll('.table1_chkChild:checked').length > 1) {
+				showAlarm("수정은 하나씩만 가능합니다.<br>하나만 선택해서 수정해 주세요.");
 				btnOk.addEventListener("click", okIsOut);
 			} else {
 				hideAlarm();
 				document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
-					// 부모 노드의 부모 노드의 하위 모든 input[type="text"] 요소에 대해 readOnly를 해제
 					checkbox.parentNode.parentNode.querySelectorAll('input[type="text"]').forEach(function(input) {
 						input.readOnly = false;
+						input.name = input.name + 'Update';
 					});
+					checkbox.parentNode.parentNode.querySelectorAll('input[type="date"]').forEach(function(input) {
+						input.readOnly = false;
+						input.name = input.name + 'Update';
+					})
 				});
 				document.querySelector("#btn_modify").style.cssText = "display: none;"
 				document.querySelector("#btn_modify_end").style.cssText = "display: inline-block;"
@@ -242,8 +224,11 @@ window.addEventListener("load", function() {
 				checkbox.parentNode.parentNode.querySelectorAll('input[type="text"]').forEach(function(input) {
 					input.readOnly = true;
 				});
-				checkbox.checked = false;
 			});
+
+			document.getElementById('myForm').action = "http://127.0.0.1:8080/mypage/ppmu"
+			btnOk.type = "submit";
+
 			document.querySelector("#btn_modify").style.cssText = "display: inline-block;"
 			document.querySelector("#btn_modify_end").style.cssText = "display: none;"
 			btnOk.removeEventListener("click", endModify);
@@ -255,10 +240,14 @@ window.addEventListener("load", function() {
 	document.querySelector("#btn_delete").addEventListener("click", function() {
 		function delRow() {
 			hideAlarm();
-			document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
-				let row = checkbox.parentNode.parentNode;
-				row.parentNode.removeChild(row);
-			});
+
+			document.getElementById('myForm').action = "http://127.0.0.1:8080/mypage/ppmd"
+			btnOk.type = "submit";
+
+			//			document.querySelectorAll('.table1_chkChild:checked').forEach(function(checkbox) {
+			//				let row = checkbox.parentNode.parentNode;
+			//				row.parentNode.removeChild(row);
+			//			});
 			btnOk.removeEventListener("click", delRow);
 		}
 		showAlarm("선택한 계획을 삭제합니다.<br>삭제한 뒤에는 내용을 되돌릴 수 없습니다!");

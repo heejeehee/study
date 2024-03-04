@@ -45,15 +45,12 @@ public class ProductionPlanManagementDelete extends HttpServlet {
 			// DB 접속
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("Connection 생성 성공");
-
-			// delete 할 컬럼 변수
-			String del = request.getParameter(password)
 			
 			// SQL 작성
 			String query = "";
-			query += " INSERT INTO item_registration_temp (item_code, item_name)";
-			query += " VALUES (?, ?)";
-			System.out.println("item_registration_temp insert문 작성 성공");
+			query += " DELETE FROM production_plan_temp";
+			query += " WHERE production_plan_code = ?";
+			System.out.println("production_plan_temp delete문 작성 성공");
 
 			// SQL 실행 준비
 			PreparedStatement ps = con.prepareStatement(query);
@@ -61,12 +58,22 @@ public class ProductionPlanManagementDelete extends HttpServlet {
 
 			// 데이터 가져오기
 			System.out.println("데이터 가져오는 중...");
+			String ppc = request.getParameter("chkChild");
+			String[] ppcs = request.getParameterValues("chkChild");
+			if (ppc != null) {
+				for (String p : ppcs) {
+					System.out.println("ppcs : " + p);
+					// 데이터 가져오기
+					System.out.println("데이터를 가져오는 중입니다...");
+					ps.setString(1, p);
+					// SQL 실행
+					ps.executeUpdate();
+				}
+			} else {
+				System.out.println("선택한 것 없음!");
+			}
+			
 
-			ps.setString(1, itemCode);
-			ps.setString(2, itemName);
-
-			// SQL 실행
-			ps.executeUpdate();
 
 			ps.close();
 			con.close();

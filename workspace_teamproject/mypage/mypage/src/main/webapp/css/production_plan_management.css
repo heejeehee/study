@@ -92,8 +92,15 @@
     /* btn_modify_end, btn_add_end */
     #btn_modify_end,
     #btn_add_end {
+		background-color: #fa5959;
     	display: none;
     }
+    
+    /* btn_modify_end, btn_add_end */
+    #btn_modify_end:active,
+    #btn_add_end:active {
+		background-color: #d80001;
+	}
 
     /* plan_table_div */
     #plan_table_div {
