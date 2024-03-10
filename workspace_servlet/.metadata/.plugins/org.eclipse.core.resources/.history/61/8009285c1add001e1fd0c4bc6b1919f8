@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="post" action="login">
+		아이디 : <input type="text" name="user_id"><br>
+		비밀번호 : <input type="password" name="user_pw"><br>
+		성별 : <input type="radio" name="gender" value="M">남
+			  <input type="radio" name="gender" value="W">녀<br>
+		취미 : <input type="checkbox" name="hobby" value="축구">축구 
+			  <input type="checkbox" name="hobby" value="농구">농구 
+			  <input type="checkbox" name="hobby" value="배구">배구 
+		<br><button type="submit">로그인</button>
+	</form>
+</body>
+</html>
