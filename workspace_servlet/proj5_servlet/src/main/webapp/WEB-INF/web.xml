@@ -11,12 +11,12 @@
   </welcome-file-list>
   
   <servlet>
-    <servlet-name>aaa</servlet-name>
+    <servlet-name>a</servlet-name>
     <servlet-class>sec01.ex01.FirstServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
-      <servlet-name>aaa</servlet-name>
-      <url-pattern>/first</url-pattern>
+      <servlet-name>a</servlet-name>
+      <url-pattern>/</url-pattern>
   </servlet-mapping>
 </web-app>
