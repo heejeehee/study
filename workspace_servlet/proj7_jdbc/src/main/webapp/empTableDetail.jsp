@@ -38,6 +38,7 @@
                 <td><%=item.getComm()%></td>
                 <td><%=item.getDeptno()%></td>
             </tr>
+            <input type="hidden" name="empno" value=<%=item.getEmpno()%>>
             <%
             }
             } else {
@@ -49,7 +50,46 @@
         </table>
         <br>
         <button type="button" id="updateBtn">수정하기</button>
+        <button type="button" id="updateDoneBtn">수정완료</button>       
         <button type="button" id="deleteBtn">삭제하기</button>
     </form>
+    
+    <script>
+        document.getElementById("updateBtn").addEventListener("click", function() {
+        	console.log("클릭");
+        	let isUpdate = confirm("수정합니까?");
+        	if(isUpdate){
+            var rows = document.querySelectorAll("table tr:not(:first-child)");
+	            rows.forEach(function(row) {
+	                var cells = row.querySelectorAll("td");
+	                cells.forEach(function(cell, index) {
+	                    var cellText = cell.innerText;
+	                    var input = document.createElement("input");
+	                    input.setAttribute("type", "text");
+	                    input.setAttribute("value", cellText.trim());
+	                    input.setAttribute("name", "empInfo" + index);
+	                    if (index === 0) { // 첫 번째 칸일 때
+	                        input.setAttribute("readonly", "readonly"); // readonly 속성 추가
+	                    }
+	                    cell.innerHTML = "";
+	                    cell.appendChild(input);
+	                });
+	            });
+		        document.getElementById("updateDoneBtn").addEventListener("click", function(){
+			        document.getElementById("myForm").action = "empupdate"
+			        document.getElementById("myForm").submit();	        	
+		        })
+        	}
+        });
+        
+        document.querySelector("#deleteBtn").addEventListener("click", function(){
+        	let isDel = confirm("삭제합니까?");
+        	if(isDel){
+        		document.getElementById("myForm").action = "empdelete"
+			    document.getElementById("myForm").submit();
+        	}
+        })
+        
+    </script>
 </body>
 </html>

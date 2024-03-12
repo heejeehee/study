@@ -197,5 +197,71 @@ public class EmpDAO {
 		}
 
 	}
+	
+	public void updateEmp(HttpServletRequest request, HttpServletResponse response) {
+		connDB(); // 1번 방식 (반드시 호출해 주어야 함)
+
+		// 데이터 변수 지정
+		String empno = request.getParameter("empInfo0");
+		String ename = request.getParameter("empInfo1");
+		String job = request.getParameter("empInfo2");
+		String mgr = request.getParameter("empInfo3");
+		String hiredate = request.getParameter("empInfo4");
+		String sal = request.getParameter("empInfo5");
+		String comm = request.getParameter("empInfo6");
+		String deptno = request.getParameter("empInfo7");
+
+		// SQL 작성
+		String query = "UPDATE emp2 SET ename = ?, job = ?, mgr = ?, hiredate = TO_DATE(?, 'YYYY-MM-DD'), sal = ?, comm = ?, deptno = ? WHERE empno = ?";
+		System.out.println("production_plan_temp update문 작성 성공");
+
+		// SQL 실행 준비
+		PreparedStatement ps;
+		try {
+		    ps = conn.prepareStatement(query);
+
+		        
+	        ps.setString(1, ename);   // ename
+	        ps.setString(2, job);   // job
+	        ps.setInt(3, Integer.parseInt(mgr));  // mgr
+	        ps.setDate(4, Date.valueOf(hiredate));   // hiredate
+	        ps.setInt(5, Integer.parseInt(sal)); // sal
+	        ps.setInt(6, Integer.parseInt(comm));     // comm
+	        ps.setInt(7, Integer.parseInt(deptno));     // deptno
+	        ps.setInt(8, Integer.parseInt(empno));     // empno
+		        
+		        // 쿼리 실행
+		        ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void deleteEmp(HttpServletRequest request, HttpServletResponse response) {
+		connDB(); // 1번 방식 (반드시 호출해 주어야 함)
+
+		// 데이터 변수 지정
+		String empno = request.getParameter("empno");
+
+		// SQL 작성
+		String query = "DELETE FROM emp2 WHERE empno = ?";
+		System.out.println("production_plan_temp delete문 작성 성공");
+
+		// SQL 실행 준비
+		PreparedStatement ps;
+		try {
+		    ps = conn.prepareStatement(query);
+
+		        
+	        ps.setString(1, empno);   // empno
+		        
+		    // 쿼리 실행
+		    ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 }
