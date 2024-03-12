@@ -62,6 +62,7 @@ public class OneServlet extends HttpServlet {
 			rs.close();
 			ps.close();
 			con.close();
+			
 			long end = System.currentTimeMillis();
 			
 			System.out.println(end-begin);
