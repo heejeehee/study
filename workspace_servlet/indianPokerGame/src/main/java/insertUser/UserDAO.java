@@ -26,18 +26,17 @@ public class UserDAO {
 		return conn;
 	}
 
-	public void insertUser(HttpServletRequest request, HttpServletResponse response) {
+	// 회원가입
+	public int insertUser(String userId, int userPw, String userName) {
+		
 		Connection conn = null;
 		PreparedStatement ps = null;
+		int result = -1;
 
 		try {
 
 			conn = connDB();
-
-			String userId = request.getParameter("userId");
-			int userPw = Integer.parseInt(request.getParameter("userPw"));
-			String userName = request.getParameter("userName");
-
+			
 			String sql = " INSERT INTO user_info (user_seq, user_id, user_pw, user_name)"
 					   + " VALUES (user_seq.NEXTVAL, ?, ?, ?)";
 
@@ -46,7 +45,12 @@ public class UserDAO {
 			ps.setInt(2, userPw);
 			ps.setString(3, userName);
 
-			ps.executeUpdate();
+			int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                result = 1; // 성공적으로 삽입됨을 나타내는 값
+            } else {
+                result = 0; // 삽입된 행이 없음을 나타내는 값
+            }
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,7 +70,8 @@ public class UserDAO {
 				}
 			}
 		}
-
+		return result;
+		
 	}
 
 }
