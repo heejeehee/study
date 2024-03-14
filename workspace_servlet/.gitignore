@@ -1,7 +1,23 @@
-.metadata/*
-Servers/*
-workspace_servlet/proj6_param/build/classes/sec01/ex01/LoginServlet.class
-workspace_servlet/proj6_param/build/classes/sec01/ex01/Login2Servlet.class
-workspace_servlet/proj6_param/build/classes/sec01/ex01/GugudanServlet.class
-workspace_servlet/proj6_param/build/classes/sec01/ex01/CalcServlet.class
-workspace_servlet/proj5_servlet/build/classes/.gitignore
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.war
+*.nar
+*.ear
+*.tar.gz
+*.rar
+.metadata/
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
