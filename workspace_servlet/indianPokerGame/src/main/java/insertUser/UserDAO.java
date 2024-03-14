@@ -31,7 +31,7 @@ public class UserDAO {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
-		int result = -1;
+		int result = -1;	// 데이터베이스 접근 오류
 
 		try {
 
@@ -45,7 +45,7 @@ public class UserDAO {
 			ps.setInt(2, userPw);
 			ps.setString(3, userName);
 
-			int rowsAffected = ps.executeUpdate();
+			int rowsAffected = ps.executeUpdate();	// 삽입된 값의 수
             if (rowsAffected > 0) {
                 result = 1; // 성공적으로 삽입됨을 나타내는 값
             } else {
