@@ -37,8 +37,8 @@ public class UserDAO {
 
 			conn = connDB();
 			
-			String sql = " INSERT INTO user_info (user_seq, user_id, user_pw, user_name)"
-					   + " VALUES (user_seq.NEXTVAL, ?, ?, ?)";
+			String sql = " INSERT INTO user_info (user_seq, user_id, user_pw, user_name, user_level)"
+					   + " VALUES (user_seq.NEXTVAL, ?, ?, ?, 'user')";
 
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
