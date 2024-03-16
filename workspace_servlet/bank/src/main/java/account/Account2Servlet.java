@@ -20,15 +20,15 @@ public class Account2Servlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("deposit") != null) {	// 입금이 null이 아닐 경우
+		if(request.getParameter("deposit") != null) {	// 입금이 null이 아닐 경우 (입금한 금액이 있을 경우)
 			depositMoney(request, response);
 			request.setAttribute("account", getAccount());
 			request.getRequestDispatcher("myAccount2.jsp").forward(request, response);
-		} else if(request.getParameter("withdraw") != null) {	// 출금이 null이 아닐 경우
+		} else if(request.getParameter("withdraw") != null) {	// 출금이 null이 아닐 경우 (출금한 금액이 있을 경우)
 			withdrawMoney(request, response);
 			request.setAttribute("account", getAccount());
 			request.getRequestDispatcher("myAccount2.jsp").forward(request, response);
-		} else {
+		} else {	// 입금이나 출금이 없을 경우 (초기화면 로드)
 			request.setAttribute("account", getAccount());
 			request.getRequestDispatcher("myAccount2.jsp").forward(request, response);			
 		}
