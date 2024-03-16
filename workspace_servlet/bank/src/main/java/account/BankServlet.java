@@ -39,12 +39,15 @@ public class BankServlet extends HttpServlet {
 		String msg = null;
 		if(type != null) {
 			if("1".equals(type)) {
-
-				int money_in = Integer.parseInt(str_in);
-				if(money_in <= 0) {
+				if(str_in == null || "".equals(str_in)) {
 					msg = "입금액을 확인하세요";
 				} else {
-					jango = jango + money_in;
+					int money_in = Integer.parseInt(str_in);
+					if(money_in <= 0) {
+						msg = "입금액을 확인하세요";
+					} else {
+						jango = jango + money_in;
+					}
 				}
 			
 			} else if("2".equals(type)) {
@@ -69,8 +72,8 @@ public class BankServlet extends HttpServlet {
 		out.println("</form>");
 		out.println("");
 		out.println("<form method='get' action='bank'>");
-		out.println("	출금 : <input type='text' name='out'>"); 
-		out.println("	<input type='text' name='type' value='2'>"); 
+		out.println("	출금 : <input type='text' name='out'>");
+		out.println("	<input type='text' name='type' value='2'>");
 		out.println("	<input type='submit' value='출금하기'>");
 		out.println("</form>");
 	}
