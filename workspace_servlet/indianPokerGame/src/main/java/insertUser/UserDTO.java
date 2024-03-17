@@ -1,17 +1,10 @@
 package insertUser;
 
 public class UserDTO {
-	int userSeq;
 	String userId;
 	String userPw;
 	String userName;
 	
-	public int getUserSeq() {
-		return userSeq;
-	}
-	public void setUserSeq(int userSeq) {
-		this.userSeq = userSeq;
-	}
 	public String getUserId() {
 		return userId;
 	}
@@ -34,8 +27,7 @@ public class UserDTO {
 	
 	@Override
 	public String toString() {
-		return "UserDTO [userSeq=" + userSeq + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
-				+ "]";
+		return "UserDTO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + "]";
 	}
 	
 	
