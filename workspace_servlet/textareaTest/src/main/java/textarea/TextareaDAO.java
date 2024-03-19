@@ -74,13 +74,10 @@ public class TextareaDAO {
 		
 	}
 	
-	public List<String> list = new ArrayList<String>();
+	public List<String> titles = new ArrayList<String>();
+	public List<Integer> seqs = new ArrayList<Integer>();
 	public Map<String, String> map = new HashMap<String, String>();
 	
-
-	public List<String> getList() {
-		return list;
-	}
 
 	// 메인페이지
 	public int mainSelect() {
@@ -94,15 +91,18 @@ public class TextareaDAO {
 
 			conn = connDB();
 			
-			String sql = " select title from textarea";
+			String sql = " select text_seq, title from textarea";
 
 			ps = conn.prepareStatement(sql);
 
 			rs = ps.executeQuery();	// SQL 실행
             while(rs.next()) {
+            	int seq = rs.getInt("text_seq");
             	String title = rs.getString("title");
+            	System.out.println(seq);
             	System.out.println(title);
-            	list.add(title);
+            	seqs.add(seq);
+            	titles.add(title);
             	result = 1;		// 데이터 읽기 성공
             }
 
@@ -136,7 +136,7 @@ public class TextareaDAO {
 	}
 	
 	// 내용상세보기
-	public int mainDetailSelect(String text_title) {
+	public int mainDetailSelect(int text_seq) {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -148,10 +148,10 @@ public class TextareaDAO {
 			conn = connDB();
 			
 			String sql = " select * from textarea";
-			sql += " where title = ? ";
+			sql += " where text_seq = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, text_title);
+			ps.setInt(1, text_seq);
 			
 			rs = ps.executeQuery();	// SQL 실행
 			while(rs.next()) {

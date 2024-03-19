@@ -37,6 +37,7 @@
 	<br><br>
 	<button type="button" id="doModify">수정하기</button>
 	<button type="submit" id="endModify">수정완료</button>
+	<button type="button" onclick="window.location.href='main.jsp'">목록으로</button>
 </form>
 <script>
 	document.querySelector("#doModify").addEventListener("click", function(){

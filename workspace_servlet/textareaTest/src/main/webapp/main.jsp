@@ -12,26 +12,27 @@
 <body>
 <% 
 	TextareaDAO dao = new TextareaDAO();
-	dao.mainSelect();
-	List<String> titles = dao.getList();
+	int result = dao.mainSelect();
 %>
-<h1> 작업지시서 </h1>
+<h1> 작업지시서 목록 </h1>
 <form id="myForm" method="get" action="#">
 	<table border="1">
 		<tr>
-			<th>작업명</th>
+			<th>번호</th><th>작업명</th>
 		</tr>
 		<% 
-			if(titles != null){
-				for(int i=0; i<titles.size(); i++){
-					String title = titles.get(i);
+			if(result == 1){
+				for(int i=0; i<dao.seqs.size(); i++){
+					int seq = dao.seqs.get(i);
+					String title = dao.titles.get(i);
 		%>
 		<tr>
-			<td><a href="textDetail?title=<%=title %>"><%=title %></a></td>
+			<th><%=seq %></th>
+			<td><a href="textDetail?seq=<%=seq %>"><%=title %></a></td>
 		</tr>
 		<% 		} %>
 		<%	} else { %>
-				<tr><th>표시할 내용이 없습니다!</th></tr>
+				<tr><th colspan="2">표시할 내용이 없습니다!</th></tr>
 		<% 	
 			}
 		%>

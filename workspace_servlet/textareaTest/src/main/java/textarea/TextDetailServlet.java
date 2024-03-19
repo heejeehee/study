@@ -17,10 +17,11 @@ public class TextDetailServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8;");
 
-		String title = request.getParameter("title");
-		if (title != null) {
+		String seq = request.getParameter("seq");
+		int cvSeq = Integer.parseInt(seq);
+		if (seq != null) {
 			TextareaDAO dao = new TextareaDAO();
-			int result = dao.mainDetailSelect(title);
+			int result = dao.mainDetailSelect(cvSeq);
 			System.out.println(result);
 
 			System.out.println( dao.map.get("seq") );

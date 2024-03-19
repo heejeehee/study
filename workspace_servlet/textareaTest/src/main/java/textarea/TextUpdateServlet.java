@@ -37,6 +37,7 @@ public class TextUpdateServlet extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.println("<script>");
 				pw.println("alert('작성 실패.\\n다시 시도해 주세요.');");
+				pw.println("window.location.href = 'textDetail?title=" + title + "';");
 				pw.println("</script>");
 			}			
 		} else {
