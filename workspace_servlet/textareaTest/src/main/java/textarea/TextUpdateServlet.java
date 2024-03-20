@@ -20,7 +20,7 @@ public class TextUpdateServlet extends HttpServlet {
 		String seq = request.getParameter("seq");
 		String title = request.getParameter("title");
 		String msg = request.getParameter("text_info");
-		System.out.println("seq : " + seq + "title : " + title + ", msg : " + msg);
+		System.out.println("seq : " + seq + ", title : " + title + ", msg : " + msg);
 		
 		if(title != null && msg != null) {
 			TextareaDAO dao = new TextareaDAO();
@@ -31,13 +31,13 @@ public class TextUpdateServlet extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.println("<script>");
 				pw.println("alert('수정 완료.');");
-				pw.println("window.location.href = 'textDetail?title=" + title + "';");
+				pw.println("window.location.href = 'textDetail?seq=" + seq + "';");
 				pw.println("</script>");
 			} else {
 				PrintWriter pw = response.getWriter();
 				pw.println("<script>");
 				pw.println("alert('작성 실패.\\n다시 시도해 주세요.');");
-				pw.println("window.location.href = 'textDetail?title=" + title + "';");
+				pw.println("window.location.href = 'textDetail?seq=" + seq + "';");
 				pw.println("</script>");
 			}			
 		} else {

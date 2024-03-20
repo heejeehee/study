@@ -29,7 +29,7 @@
 	<div><%=request.getAttribute("text_info") %></div>
 </div>
 <div id="modWrap">
-	<input type="hidden" name="seq" value=<%=request.getAttribute("seq")%>>
+	<input type="hidden" name="seq" value="<%=request.getAttribute("seq")%>">
 	작업지시서 제목 : <input type="text" name="title" value="<%=request.getAttribute("title") %>">
 	<br><br>
 	<textarea name="text_info" rows="40" cols="70" value="<%=request.getAttribute("text_info") %>"><%=request.getAttribute("text_info") %></textarea>
