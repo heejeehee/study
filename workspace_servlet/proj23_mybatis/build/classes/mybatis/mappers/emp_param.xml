@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.emp.param"> <!-- namespace는 아무거나 가능 -->
+
+	<!-- 
+		parameterType은 전달인자 받기(생략은 가능하나 가급적 적어주기)
+	 	#{empno} 마음대로 변수명 정해서 썼는데 안될 때 
+		ㄴ  #{_parameter} 를 사용하면 된다 
+		전달인자가 list 또는 배열인 경우  
+	  	ㄴ  #{0}, #{1}, #{param1}, #{param2} 이런식으로 쓰면 됨
+	  	
+	  	#{} : 자동으로 '를 붙여줌, 숫자일때는 안붙여줌
+	  	${} : 아무것도 안 붙여줌 홀따옴표가 필요하다면 '${}'이렇게 써야함. (보안상 위험이 조금 있음) 
+	-->
+	<select id="selectEmpByEmpno" resultType="empDTO_param" parameterType="string">
+		select
+			*
+		from
+			emp4
+		where
+			empno = #{_parameter}
+	</select>
+	<!-- #{아무거나 적어도 무관}, 기본값은 _parameter 
+		 만약에 dto를 넘겼다면 dto의 필드명을 적으면 자동으로 getter해줌
+		 ${홀따옴표가 자동으로 안붙음.} -->
+		 
+	<!-- com.spring.ex03.param.EmpDTO 쓰기 귀찮으니 empDTO3 사용 -->
+	<insert id="insertEmp" parameterType="com.spring.ex03.param.EmpDTO">
+		insert into emp4 (
+			empno, 
+			ename, 
+			sal, 
+			deptno, 
+			hiredate
+		)
+		values (
+			#{empno},
+			#{ename},
+			#{sal},
+			#{deptno},
+			sysdate
+		)
+	</insert>
+	
+	<update id="updateEmp" parameterType="empDTO_param">
+		update emp4
+		set
+			ename = #{ename},
+			sal = #{sal},
+			deptno = #{deptno}
+		where
+			empno = #{empno}
+	</update>
+	
+	<delete id="deleteEmp" parameterType="empDTO_param">
+		delete from emp4
+		where empno = #{empno}
+	</delete>
+		 
+	
+<!-- sql실행 전 또는 후에 다른 sql 실행하는 방법
+
+	 dto에 id2라는 필드와 setter가 있을 때
+	 selectKey의 keyProperty에 지정한 필드 즉 dto의 id2에 저장됨
+
+	<insert id="seqWithInsert" parameterType="xxxDTO">
+		<selectKey keyProperty="id2" resultType="int" order="BEFORE 또는 AFTER">
+			select seq.nextval from dual
+		</selectKey>
+		
+		insert into table_name (col1, col2)
+		values (seq.currval 또는 #{id}, #{col2})
+	</insert>
+-->
+
+<!-- 미리 시퀀스를 실행해서 java변수에 넣고 활용 
+	int a_id = select seq_a.nextval from dual;
+	
+	insert into table_a (a_id...
+	values (#{a_id}...
+	insert into table_b (a_id...
+	values (#{a_id}...
+-->
+
+<!-- dto에 a_id 필드와 setter가 있을 때
+	 keyProperty에 적힌 dto의 필드에 넣어줌
+
+	 java dao에서 sqlSession.insert("id", dto);
+	 실행 이후에 dto의 a_id 에는 방금 insert 한 a_id가 들어감 (얕은복사)
+	 
+	<insert id="test2" parameterType="xxxDTO" userGeneratedKeys="true" keyProperty="a_id">
+		insert into table_a (a_id, name)
+		values (seq.nextval, #{name})
+	</insert>
+-->
+
+</mapper>

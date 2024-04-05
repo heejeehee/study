@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!-- tag(node) 의 순서에 주의 -->
+
+<!-- mapper애서 사용할 타입이 길어서 짧게 별칭 지정 -->
+
+	<!-- 전달인자로 들어가는 null 이 에러가 나지 않게 함 (전달인자로 null을 줄 수 있음) -->
+    <settings>
+
+        <setting name="jdbcTypeForNull" value="NULL" />
+
+    </settings>
+
+	<typeAliases>
+		<typeAlias type="com.spring.ex01.EmpDTO" alias="empDTO" />
+		<typeAlias type="com.spring.ex03.param.EmpDTO" alias="empDTO_param" /> <!-- 우연히 이름이 같을 뿐 전혀 다른 클래스로 인식하기 때문에 추가해 주어야 함, alias(별칭)은 아무거나 가능 -->
+		<typeAlias type="com.spring.ex04.dynamic.EmpDTO" alias="empDTO_dynamic" /> <!-- 우연히 이름이 같을 뿐 전혀 다른 클래스로 인식하기 때문에 추가해 주어야 함, alias(별칭)은 아무거나 가능 -->
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"></property>
+				<property name="url" value="jdbc:oracle:thin:@112.148.46.134:51521:xe"></property>
+				<property name="username" value="scott4_5"></property>
+				<property name="password" value="tiger"></property>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="mybatis/mappers/emp.xml" />
+		<mapper resource="mybatis/mappers/emp_param.xml" />
+		<mapper resource="mybatis/mappers/emp_dynamic.xml" />
+	</mappers>
+	
+</configuration>

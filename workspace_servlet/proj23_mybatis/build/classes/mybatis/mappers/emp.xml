@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.emp">
+
+	<!-- 컬럼명과 dto의 이름이 다를때 매핑해 주기 좋음 -->
+	<resultMap id="empResult" type="empDTO" autoMapping="false"> <!-- autoMapping false를 지정해야만 mapping한 값만 찾기 가능, 안하면 sal값도 나옴 -->
+		<result property="empno" column="empno" />
+		<result property="ename" column="name" />
+	</resultMap>
+		
+	<select id="selectEmpResult" resultMap="empResult">
+		select 
+			empno, ename as name, sal
+		from 
+			emp
+		where 
+			empno = 7788
+	</select>
+	
+<!--<select id="selectAllEmpList" resultType="com.spring.ex01.EmpDTO"> -->
+ 	<select id="selectAllEmpList" resultType="empDTO">
+		/* mapper.emp.selectAllEmpList */
+		<![CDATA[
+		select * from emp4
+		order by hiredate desc
+		]]>
+	</select>
+	
+<!--<select id="selectEname" resultType="string"> 소문자도 가능 -->
+ 	<select id="selectEname" resultType="String">
+		<![CDATA[
+		select ename from emp
+		where empno = 7788
+		]]>
+	</select>
+	
+<!--<select id="selectEmpMap" resultType="java.util.HashMap"> -->
+ 	<select id="selectEmpMap" resultType="hashmap">
+		select 
+			* 
+		from 
+			emp
+		where 
+			empno = 7788
+	</select>
+
+</mapper>
