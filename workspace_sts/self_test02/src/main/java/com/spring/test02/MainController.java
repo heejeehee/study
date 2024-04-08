@@ -26,6 +26,7 @@ public class MainController {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", "main2");
 		mav.setViewName("main");
+		System.out.println("pushtest");
 		return mav;
 	}
 }
