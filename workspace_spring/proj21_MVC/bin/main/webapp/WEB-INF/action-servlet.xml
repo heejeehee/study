@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="userUrlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<!-- 컨트롤러가 만약 새로 생긴다면? 등록할곳 (클래스) -->
+				<prop key="/test/*.do">
+					userController
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="userController" class="com.spring.ex02.UserController">
+		<property name="methodNameResolver"> <!-- setter -->
+			<ref local="userMethodNameResolver" />
+		</property>
+	</bean>
+
+	<bean id="userMethodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<!-- 메서드가 생기거나 수정할 거리 생기면? 등록할곳 -->
+				<prop key="/test/login.do">login</prop>
+				<prop key="/test/memberInfo.do">memberInfo</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 내부적으로 forward를 해주는 역할이 있음 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/test/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>
