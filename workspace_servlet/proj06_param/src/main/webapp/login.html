@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form name="frmLogin" method="post" action="login?subject=123">
+		아이디 : <input type="text" name="user_id"><br>
+		비밀번호 : <input type="password" name="user_pw"><br>
+		<input type="hidden" name="theme" value="dark">
+<!--		<input type="checkbox" name="subject" value="java" checked="checked">자바-->
+<!--		<input type="checkbox" name="subject" value="c언어">c언어-->
+<!--		<input type="checkbox" name="subject" value="JSP">JSP-->
+<!--		<input type="checkbox" name="subject" value="android">안드로이드-->
+		<input type="submit" value="로그인">
+<!--		<button>로그인</button>-->
+	</form>
+	
+	<script>
+		document.querySelector("[type=submit]").addEventListener("click", function(event){
+			event.preventDefault();	// submit 즉 기본기능 제거
+			// doAjax();
+			doAjaxPost();
+		})
+		
+		function doAjaxPost() {
+			console.log("doAjax 실행")
+			
+            // ajax 객체 생성
+            let xhr = new XMLHttpRequest();
+            // 보낼 준비
+            xhr.open("post", "login?user_id=123&subject=a");
+
+            // 보내기(단! 언제 끝날지 모름)
+            xhr.send();
+
+            // 다녀온 후(응답 이후)
+            xhr.onload = function () {
+                // 받아온 내용이 저장되는 곳
+                let data = xhr.responseText;
+                console.log(data);
+
+				let json = JSON.parse(data);
+				console.log('k :', json.k)
+				console.log('k :', json['k'])
+            }
+        }
+
+		function doAjax() {
+			console.log("doAjax 실행")
+			
+            // ajax 객체 생성
+            let xhr = new XMLHttpRequest();
+            // 보낼 준비
+            xhr.open("get", "login?user_id=123&subject=a");
+
+            // 보내기(단! 언제 끝날지 모름)
+            xhr.send();
+
+            // 다녀온 후(응답 이후)
+            xhr.onload = function () {
+                // 받아온 내용이 저장되는 곳
+                let data = xhr.responseText;
+                console.log(data);
+
+				let json = JSON.parse(data);
+				console.log('k :', json.k)
+				console.log('k :', json['k'])
+            }
+        }
+
+	</script>
+	
+</body>
+</html>

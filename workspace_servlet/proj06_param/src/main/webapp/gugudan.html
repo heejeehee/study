@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!--<form id="myForm" method="get" action="gugu">-->
+		단입력 : <input type="number" name="dan">
+		
+		<div>
+			<span id="danTxt"></span>
+		</div>
+	<!--</form>-->
+
+	
+	<script>
+		document.querySelector("input").addEventListener("change", function(event){
+			doGugu();
+		})
+		
+		function doGugu(){
+			console.log("doCalc 실행");
+			let dan = document.getElementsByName("dan")[0].value;
+			
+            let xhr = new XMLHttpRequest();
+            xhr.open("get", "gugu?dan="+dan);
+            xhr.send();
+            
+            // 다녀온 후(응답 이후)
+            xhr.onload = function () {
+                // 받아온 내용이 저장되는 곳
+                let data = xhr.responseText;
+                console.log(data);
+                document.querySelector("#danTxt").innerHTML = data;
+            }
+		}
+	</script>
+</body>
+</html>
