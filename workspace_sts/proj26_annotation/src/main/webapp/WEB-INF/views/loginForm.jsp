@@ -7,7 +7,7 @@
 <title>loginForm</title>
 </head>
 <body>
-	<form method="post" action="login.do">
+	<form method="post" action="login4.do">
 		아이디 : <input type="text" name="userID"><br>
 		닉네임 : <input type="text" name="userName"><br>
 		<br>
