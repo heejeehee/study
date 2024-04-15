@@ -16,7 +16,7 @@
    </definition>
    
    <definition name="main1" extends="baseLayout"> <!-- template 을 갖고 있는 definition의 name값 -->
-   	  <put-attribute name="title" value="메인페이지" />
+   	  <put-attribute name="title" value="메인페이지" /> <!-- 덮어쓰기 한 값들임. -->
    	  <put-attribute name="body" value="/WEB-INF/views/main1.jsp" />
    </definition>
 

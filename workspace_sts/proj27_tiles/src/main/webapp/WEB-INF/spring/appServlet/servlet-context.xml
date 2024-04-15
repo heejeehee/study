@@ -36,6 +36,7 @@
 	</beans:bean>
 	<beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+<!-- 		order 순으로 체크 -->
 		<beans:property name="order" value="1" />
 	</beans:bean>
 
