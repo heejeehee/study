@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+   <definition name="baseLayout"  template="/WEB-INF/views/tiles/layout/layout.jsp">
+      <put-attribute name="title" value="기본타이틀" />
+      <put-attribute name="header" value="/WEB-INF/views/tiles/layout/header.jsp" />
+      <put-attribute name="side" value="/WEB-INF/views/tiles/layout/side.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/tiles/layout/footer.jsp" />
+   </definition>
+   
+   <definition name="baseLayout2"  template="/WEB-INF/views/tiles/layout/layout2.jsp">
+      <put-attribute name="body" value="" />
+   </definition>
+   
+   <definition name="main1" extends="baseLayout"> <!-- template 을 갖고 있는 definition의 name값 -->
+   	  <put-attribute name="title" value="메인페이지" />
+   	  <put-attribute name="body" value="/WEB-INF/views/main1.jsp" />
+   </definition>
+
+   <definition name="main2" extends="baseLayout">
+   	  <put-attribute name="body" value="/WEB-INF/views/main2.jsp" />
+   </definition>
+   
+   <definition name="home" extends="baseLayout2">
+   	  <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+   </definition>
+   
+<!--    <definition name="*.jsp" extends="baseLayout2"> -->
+   <definition name="*.noTiles" extends="baseLayout2">
+   	  <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+<!--  .noTiles가 붙은 것들은 전부 {1}.jsp로 들어온다 -->
+<!--  중괄호에는 컨트롤러에서 리턴받은 값이 들어간다. -->
+   </definition>
+   
+   <definition name="*/*/*.noTiles" extends="baseLayout2">
+   	  <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+   </definition>
+
+</tiles-definitions>
