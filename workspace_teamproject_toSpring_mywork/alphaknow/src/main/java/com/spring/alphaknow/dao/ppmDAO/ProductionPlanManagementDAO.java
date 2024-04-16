@@ -15,4 +15,6 @@ public class ProductionPlanManagementDAO {
 		List list = sqlSession.selectList("mapper.ppm.ppmSelect");
 		return list;
 	}
+	
+	public 
 }
