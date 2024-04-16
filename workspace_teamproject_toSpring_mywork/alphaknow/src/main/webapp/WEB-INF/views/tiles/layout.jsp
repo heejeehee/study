@@ -7,20 +7,23 @@
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title" /></title>
 </head>
+
+<link rel="stylesheet" href="/alphaknow/resources/css/tiles/layout.css">
+
 <body>
-	<div id="container">
-		<div id="header">
-			<tiles:insertAttribute name="header" />
-		</div>
-		<div id="nav">
-			<tiles:insertAttribute name="nav" />
-		</div>
-		<div id="content">
-			<tiles:insertAttribute name="content" />
-		</div>
-		<div id="footer">
-			<tiles:insertAttribute name="footer" />
-		</div>
+	<div class="wrap">
+
+		<tiles:insertAttribute name="header" />
+
+
+		<tiles:insertAttribute name="nav" />
+
+
+		<tiles:insertAttribute name="content" />
+
+
+		<tiles:insertAttribute name="footer" />
+
 	</div>
 </body>
 </html>
